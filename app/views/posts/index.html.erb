@@ -2,13 +2,18 @@
 
 <h1>Posts</h1>
 
-<% @posts.each do |post| %>
-  <p><%= post.title %></p>
-<% end %>
+<div class="angular" ng-controller="PostIndexController as vm">
+  <div data-ng-repeat="post in vm.posts">
+    {{ post.title }}
+  </div>
+</div>
+
+<%# @posts.each do |post| %>
+  <p><%#= post.title %></p>
+<%# end %>
 
 <% console %>
 
-<div class="angular" ng-controller="PostIndexController as vm">{{vm.post.title}}</div>
 <br>
 
 <%= link_to 'New Post', new_post_path %>

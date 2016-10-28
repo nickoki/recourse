@@ -15,16 +15,37 @@
 //= require turbolinks
 //= require_tree .
 //= require angular
+//= require angular-resource
+//= require angular-ui-router
 
 angular
   .module("recourse", [
+    "ui.router",
+    "ngResource"
+  ])
+  .config([
+    "$stateProvider",
+    RouterFunction
+  ])
+  .factory("PostFactory", [
+    "$resource",
+    PostFactoryFunction
   ])
   .controller("PostIndexController", [
+    "PostFactory",
     PostIndexControllerFunction
   ])
 
-  function PostIndexControllerFunction() {
-    console.log("YO! I'm IN YOUR CONTROLLLLLLLERRRRR");
-    this.post = {}
-    this.post.title = "I'M A POST!!!!!!"
-  }
+function PostFactoryFunction($resource) {
+  return $resource("http://localhost:3000/posts/:id.json", {}, {
+    update: {method: "PUT"}
+  })
+}
+
+function PostIndexControllerFunction(PostFactory) {
+  this.posts = PostFactory.query()
+}
+
+function RouterFunction() {
+  // this is a placeholder
+}
