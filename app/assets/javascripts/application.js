@@ -25,4 +25,6 @@ angular
 
   function PostIndexControllerFunction() {
     console.log("YO! I'm IN YOUR CONTROLLLLLLLERRRRR");
+    this.post = {}
+    this.post.title = "I'M A POST!!!!!!"
   }
