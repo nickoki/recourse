@@ -14,3 +14,15 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require angular
+
+angular
+  .module("recourse", [
+  ])
+  .controller("PostIndexController", [
+    PostIndexControllerFunction
+  ])
+
+  function PostIndexControllerFunction() {
+    console.log("YO! I'm IN YOUR CONTROLLLLLLLERRRRR");
+  }
