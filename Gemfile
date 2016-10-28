@@ -52,6 +52,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #
 
 # Use Devise for the User model
-gem 'devise', '~> 3.5.6'
+gem 'devise'
 # Use Bootstrap for CSS awesomeness
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
