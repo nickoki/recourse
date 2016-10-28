@@ -2,24 +2,13 @@
 
 <h1>Posts</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% @posts.each do |post| %>
+  <p><%= post.title %></p>
+<% end %>
 
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% console %>
 
+<div class="angular" ng-controller="PostIndexController as vm">{{vm.post.title}}</div>
 <br>
 
 <%= link_to 'New Post', new_post_path %>

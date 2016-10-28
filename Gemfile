@@ -55,3 +55,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 # Use Bootstrap for CSS awesomeness
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
+# ANGULAR
+gem 'angularjs-rails', '~> 1.5', '>= 1.5.8'
