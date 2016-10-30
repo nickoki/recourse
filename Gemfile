@@ -53,6 +53,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Use Devise for the User model
 gem 'devise'
+# Use JSON Web Tokens for User Auth
+gem 'jwt', '~> 1.5', '>= 1.5.6'
 # Use Bootstrap for CSS awesomeness
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 # ANGULAR
