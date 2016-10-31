@@ -1,38 +1,32 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
 
-  before_action :authenticate
+  attr_reader :current_user
 
-  def logged_in?
-    !!current_user
-  end
-
-  def current_user
-    if auth_present?
-      user = User.find(auth["user"])
-      if user
-        @current_user ||= user
+  protected
+    def authenticate_request!
+      unless user_id_in_token?
+        render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+        return
       end
+      @current_user = User.find(auth_token[:user_id])
+    rescue JWT::VerificationError, JWT::DecodeError
+      render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end
-  end
-
-  def authenticate
-    unless logged_in?
-      # render json: {error: "unauthorized"}, status: 401
-    end
-    p "authenticated"
-  end
 
   private
-    def token
-      request.env["HTTP_AUTHORIZATION"].scan(/Bearer
-        (.*)$/).flatten.last
+    def http_token
+      @http_token ||= if request.headers['Authorization'].present?
+        request.headers['Authorization'].split(' ').last
+      end
     end
-    def auth
-      Auth.decode(token)
+
+    def auth_token
+      @auth_token ||= Auth.decode(http_token)
     end
-    def auth_present?
-      !!request.env.fetch("HTTP_AUTHORIZATION",
-        "").scan(/Bearer/).flatten.first
+
+    def user_id_in_token?
+      http_token && auth_token && auth_token[:user_id].to_i
     end
 end

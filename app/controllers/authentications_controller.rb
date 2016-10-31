@@ -1,30 +1,22 @@
 # app/controllers/authentications_controller.rb
-class AuthenticationsController < Devise::SessionsController
+class AuthenticationsController < ApplicationController
 
-  skip_before_action :authenticate
-
-  def create
-
-    super
-
-
-
-    user = User.find_by(email: auth_params[:email])
-    p "USER: #{user}"
-    # If user can be authenticated, generate JWT from lib/auth.rb
-    # if user.authenticate(auth_params[:password])
-      # Encrypt unique user id (instead of sensitive data, like email or password)
-      jwt = Auth.issue({user: user.id})
-      # Send JWT back to fornt-end, store in localStorage
-      p "JWT: #{jwt}"
-    # else
-    # end
+  def authenticate_user
+    user = User.find_for_database_authentication(email: params[:email])
+    if user.valid_password?(params[:password])
+      render json: payload(user)
+    else
+      render jsdon: {errors: ['Invalid Username/Password']}, status: :unauthorized
+    end
   end
 
   private
-    def auth_params
-      # params.require(:auth).permit(:email, :password)
-      params.require(:user).permit(:email, :password)
+    def payload(user)
+      return nil unless user and user.id
+      {
+        auth_token: Auth.issue({user_id: user.id}),
+        user: {id: user.id, email: user.email}
+      }
     end
 
 end
