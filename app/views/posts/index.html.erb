@@ -1,3 +1,12 @@
 <h1>Posts</h1>
 
-<div data-ui-view></div>
+<div class="angular" ng-controller="PostIndexController as vm">
+  <div data-ng-repeat="post in vm.posts">
+    {{ post.title }}
+  </div>
+</div>
+
+<br>
+<%= console %>
+
+<%= link_to 'New Post', new_post_path %>
