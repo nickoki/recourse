@@ -44,6 +44,14 @@ function PostIndexControllerFunction(PostFactory) {
   this.posts = PostFactory.query()
 }
 
+function VoteAjax() {
+
+}
+
+function FavoriteAjax() {
+  
+}
+
 function RouterFunction() {
   // this is a placeholder
 }
