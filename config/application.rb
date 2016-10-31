@@ -13,3 +13,6 @@ module Recourse
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+# Config Rails to autoload lib/auth.rb
+config.autoload_paths << Rails.root.join('lib')
