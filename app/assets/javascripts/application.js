@@ -13,13 +13,16 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
 //= require angular
+//= require angular-rails-templates
+//= require_tree ../templates
+//= require_tree .
 //= require bootstrap
 
 angular
   .module("recourse", [
     "ui.router",
+    "templates",
     "ngResource"
   ])
   .config([
@@ -36,7 +39,7 @@ angular
   ])
 
 function PostFactoryFunction($resource) {
-  return $resource("http://localhost:3000/posts/:id", {}, {
+  return $resource("http://localhost:3000/posts/:id.json", {}, {
     update: {method: "PUT"}
   })
 }
@@ -49,7 +52,7 @@ function RouterFunction($stateParams) {
   $stateParams
     .state("postIndex", {
       url: "/",
-      templateUrl: "",
+      templateUrl: "index.html",
       controller: "PostIndexController",
       controllerAs: "vm"
     })
