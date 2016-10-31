@@ -37,6 +37,11 @@ angular
     "PostFactory",
     PostIndexControllerFunction
   ])
+  .controller("PostShowController", [
+    "PostFactory",
+    "$stateParams",
+    PostShowControllerFunction
+  ])
 
 function PostFactoryFunction($resource) {
   return $resource("http://localhost:3000/posts/:id.json", {}, {
@@ -48,6 +53,10 @@ function PostIndexControllerFunction(PostFactory) {
   this.posts = PostFactory.query()
 }
 
+function PostShowControllerFunction(PostFactory,$stateParams) {
+  this.post = PostFactory.get({id: $stateParams.id})
+}
+
 function RouterFunction($stateParams) {
   $stateParams
     .state("postIndex", {
@@ -55,5 +64,11 @@ function RouterFunction($stateParams) {
       templateUrl: "index.html",
       controller: "PostIndexController",
       controllerAs: "vm"
+    })
+    .state("postShow", {
+      url: "/posts/:id",
+      templateUrl: "show.html"
+      controller: "PostShowController",
+      controllerAs: "vm",
     })
 }
