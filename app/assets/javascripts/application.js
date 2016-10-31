@@ -44,8 +44,8 @@ angular
   ])
 
 function PostFactoryFunction($resource) {
-  return $resource("http://localhost:3000/posts/:id.json", {}, {
-    update: {method: "PUT"}
+  return $resource("http://localhost:3000/api/posts/:id.json", {}, {
+    update: { method: "PUT" }
   })
 }
 
@@ -54,7 +54,7 @@ function PostIndexControllerFunction(PostFactory) {
 }
 
 function PostShowControllerFunction(PostFactory,$stateParams) {
-  this.post = PostFactory.get({id: $stateParams.id})
+  this.post = PostFactory.get({ id: $stateParams.id })
 }
 
 function RouterFunction($stateParams) {
@@ -67,8 +67,8 @@ function RouterFunction($stateParams) {
     })
     .state("postShow", {
       url: "/posts/:id",
-      templateUrl: "show.html"
+      templateUrl: "show.html",
       controller: "PostShowController",
-      controllerAs: "vm",
+      controllerAs: "vm"
     })
 }

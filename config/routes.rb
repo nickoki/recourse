@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   post 'auth_user' => 'authentications#authenticate_user'
 
   # Define Posts controller routes
-  resources :posts
+  namespace :api do
+    resources :posts
+  end
 
   # Set root controller route
   root to: "posts#index"
