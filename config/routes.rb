@@ -1,18 +1,20 @@
+# config/routes.rb
+
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  # Define Devise routes, extend the RegistrationsController to custom AuthenticationsController
-  devise_for :users
-
-  # Route to authenticate user and assign JWT
-  post 'auth_user' => 'authentications#authenticate_user'
+  # Set root controller route
+  root to: "posts#index"
 
   # Define Posts controller routes
   namespace :api do
     resources :posts
   end
 
-  # Set root controller route
-  root to: "posts#index"
+  # Define Devise routes, extend the RegistrationsController to custom AuthenticationsController
+  devise_for :users
+
+  # Route to authenticate user and assign JWT
+  post 'auth_user' => 'authentications#authenticate_user'
 
 end
