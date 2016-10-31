@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+<<<<<<< HEAD
   protect_from_forgery with: :null_session
 
   attr_reader :current_user
@@ -28,4 +29,8 @@ class ApplicationController < ActionController::Base
     def user_id_in_token?
       http_token && auth_token && auth_token[:user_id].to_i
     end
+=======
+  include DeviseTokenAuth::Concerns::SetUserByToken
+  protect_from_forgery with: :exception
+>>>>>>> 87bcc0da954ed6d9d5cc026a2e407ac07211c394
 end
