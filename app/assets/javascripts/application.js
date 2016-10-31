@@ -44,7 +44,7 @@ angular
   ])
 
 function PostFactoryFunction($resource) {
-  return $resource("http://localhost:3000/api/posts/:id.json", {}, {
+  return $resource("/api/posts/:id.json", {}, {
     update: { method: "PUT" }
   })
 }
