@@ -15,12 +15,7 @@
 //= require turbolinks
 //= require_tree .
 //= require angular
-<<<<<<< HEAD
-//= require angular-resource
-//= require angular-ui-router
 //= require bootstrap
-=======
->>>>>>> 87bcc0da954ed6d9d5cc026a2e407ac07211c394
 
 angular
   .module("recourse", [
