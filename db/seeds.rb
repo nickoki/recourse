@@ -12,7 +12,7 @@ require_relative './post_data.rb'
 
 # Truncate tables
 Vote.destroy_all
-Bookmark.destroy_all
+Favorite.destroy_all
 Post.destroy_all
 User.destroy_all
 
@@ -35,10 +35,10 @@ one = Post.create!(user: nick, link: "http://railscasts.com/episodes/182-croppin
 two = Post.create!(user: barrett, link: "https://github.com/bcope/tutorials/blob/master/atom-snippets.md", title: "Atom Snippets Tutorial")
 three = Post.create!(user: tim, link: "https://chriswrightdesign.com/experiments/flexbox-adventures/", title: "Flexbox Adventures")
 
-# bookmarks
-Bookmark.create!(user: nick, post: two)
-Bookmark.create!(user: barrett, post: three)
-Bookmark.create!(user: tim, post: one)
+# favorites
+Favorite.create!(user: nick, post: two)
+Favorite.create!(user: barrett, post: three)
+Favorite.create!(user: tim, post: one)
 
 # votes
 Vote.create!(user: nick, post: two, vote_type: "up")
