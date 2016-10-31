@@ -36,7 +36,7 @@ angular
   ])
 
 function PostFactoryFunction($resource) {
-  return $resource("http://localhost:3000/posts/:id.json", {}, {
+  return $resource("http://localhost:3000/posts/:id", {}, {
     update: {method: "PUT"}
   })
 }
@@ -45,6 +45,12 @@ function PostIndexControllerFunction(PostFactory) {
   this.posts = PostFactory.query()
 }
 
-function RouterFunction() {
-  // this is a placeholder
+function RouterFunction($stateParams) {
+  $stateParams
+    .state("postIndex", {
+      url: "/",
+      templateUrl: "",
+      controller: "PostIndexController",
+      controllerAs: "vm"
+    })
 }
