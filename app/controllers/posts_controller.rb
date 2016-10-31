@@ -7,12 +7,22 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all
     # render json: @posts
+    respond_to do |format|
+      format.html { }
+      format.json { render json: @posts }
+    end
+
   end
 
   # GET /posts/1
   def show
     @post = Post.find(params[:id])
     render json: @post
+    # respond_to do |format|
+    #   format.html { render :show }
+    #   format.json { render json: @post  }
+    # end
+    
   end
 
   # GET /posts/new
