@@ -13,15 +13,16 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
 //= require angular
-//= require angular-resource
-//= require angular-ui-router
+//= require angular-rails-templates
+//= require_tree ../templates
+//= require_tree .
 //= require bootstrap
 
 angular
   .module("recourse", [
     "ui.router",
+    "templates",
     "ngResource"
   ])
   .config([
@@ -47,6 +48,12 @@ function PostIndexControllerFunction(PostFactory) {
   this.posts = PostFactory.query()
 }
 
-function RouterFunction() {
-  // this is a placeholder
+function RouterFunction($stateParams) {
+  $stateParams
+    .state("postIndex", {
+      url: "/",
+      templateUrl: "index.html",
+      controller: "PostIndexController",
+      controllerAs: "vm"
+    })
 }
