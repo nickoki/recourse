@@ -20,8 +20,4 @@ class Auth
     # Use decode method (from jwt gem) to interpret a token
     JWT.decode(token, Rails.application.secrets.secret_key_base, true, { algorithm: ALGORITHM }).first
   end
-
-  def self.auth_secret
-    ENV["AUTH_SECRET"]
-  end
 end

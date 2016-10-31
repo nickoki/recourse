@@ -55,12 +55,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 # Use JSON Web Tokens for User Auth
 gem 'jwt', '~> 1.5', '>= 1.5.6'
-
+# Use figaro to create and protect token secrets
 gem 'figaro'
 # Use Bootstrap for CSS awesomeness
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 # ANGULAR
 gem 'angularjs-rails', '~> 1.5', '>= 1.5.8'
 gem 'angular-ui-router-rails', '~> 0.2.15'
-
-gem 'pry-rails'
