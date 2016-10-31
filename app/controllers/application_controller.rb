@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
   protect_from_forgery with: :null_session
 
   attr_reader :current_user
@@ -10,7 +9,7 @@ class ApplicationController < ActionController::Base
         render json: { errors: ['Not Authenticated'] }, status: :unauthorized
         return
       end
-      @current_user = User.find(auth_token[:user_id])
+      @current_user = User.find(auth_token["user_id"])
     rescue JWT::VerificationError, JWT::DecodeError
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end

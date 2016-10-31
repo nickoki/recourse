@@ -62,3 +62,5 @@ gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 # ANGULAR
 gem 'angularjs-rails', '~> 1.5', '>= 1.5.8'
 gem 'angular-ui-router-rails', '~> 0.2.15'
+
+gem 'pry-rails'

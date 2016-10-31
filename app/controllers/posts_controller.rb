@@ -6,14 +6,15 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    render json: {'logged_in' => true}
+    # render json: {'logged_in' => true}
 
-    # @posts = Post.all
+    @posts = Post.all
     # respond_to do |format|
     #   format.html { render :index }
     #   format.json { render json: @posts }
     # end
 
+    render json: @posts
   end
 
   # GET /posts/1
