@@ -38,6 +38,7 @@ angular
 // Post Factory Function
 function PostFactoryFunction($resource) {
   return $resource("/api/posts/:id.json", {}, {
+    create: { method: "POST" },
     update: { method: "PUT" }
   })
 }
@@ -47,10 +48,21 @@ function PostFactoryFunction($resource) {
 // Index Post Controller Function
 function PostIndexControllerFunction(PostFactory) {
   this.posts = PostFactory.query()
+
+  this.create = function(post) {
+    var newPost = new PostFactory({ title: post.title, link: post.link, user_id: 1 })
+    newPost.$save().then( () => {
+
+      // After save, re-query the API
+      this.posts = PostFactory.query()
+    })
+    console.log("CLICK");
+    // PostFactory.save({}, { title: post.title, link: post.link }).$promise
+  }
 }
 
 // Show Post Controller Function
-function PostShowControllerFunction(PostFactory,$stateParams) {
+function PostShowControllerFunction(PostFactory, $stateParams) {
   this.post = PostFactory.get({ id: $stateParams.id })
 }
 

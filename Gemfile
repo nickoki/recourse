@@ -63,3 +63,5 @@ gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'angularjs-rails', '~> 1.5', '>= 1.5.8'
 # Use Angular Rails Templates to add angular views to Rails pipeline
 gem 'angular-rails-templates'
+
+gem 'pry-rails'

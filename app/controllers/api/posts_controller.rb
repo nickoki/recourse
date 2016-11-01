@@ -1,7 +1,12 @@
 class Api::PostsController < ApplicationController
+
+  protect_from_forgery with: :null_session
+
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
-  before_action :authenticate_request!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_request!, only: [
+    # :new, :create,
+    :edit, :update, :destroy]
 
   # GET /posts
   def index
@@ -32,7 +37,10 @@ class Api::PostsController < ApplicationController
 
   # POST /posts
   def create
-    # @post = Post.new(post_params)
+    @post = Post.new(post_params)
+    # @post = Post.create! post_params
+    @post.save
+
     # respond_to do |format|
     #   if @post.save
     #     format.html { redirect_to @post, notice: 'Post was successfully created.' }
@@ -74,6 +82,8 @@ class Api::PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :link)
+      # params.require(:post).permit(:title, :link)
+      # .require(:post) causing errors with API requests
+      params.permit(:title, :link, :user_id)
     end
 end
