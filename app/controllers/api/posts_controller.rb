@@ -81,21 +81,16 @@ class Api::PostsController < ApplicationController
   end
 
   # FAVORITES!
-
   def add_favorite
-    flash[:notice] = "ADDING FAVORITE!"
-    puts "ADDING FAVORITEEEEEEE"
     @post = Post.find(post_params[:id])
     @favorite = @post.favorites.new(user_id: 1)
-    if @favorite.save
-      flash[:notice] = "FAVORITE CREATED!"
-    else
-      flash[:alert] = "FAVORITE NOT CREATED"
-    end
+    @favorite.save
   end
 
   def remove_favorite
     @post = Post.find(post_params[:id])
+    @favorite = @post.favorites.find_by(user_id: 1)
+    @favorite.destroy
   end
 
   private

@@ -60,7 +60,8 @@ function FavoriteFactoryFunction($resource) {
   return $resource("/api/posts/:id/favorite", {
     id: '@id'
   }, {
-    create: { method: "POST" }
+    create: { method: "POST" },
+    delete: { method: "DELETE" }
   })
 }
 
@@ -69,7 +70,6 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
-
 
   // Create method sends POST request to /api/posts
   this.create = function(post) {
@@ -95,9 +95,14 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
       this.posts = PostFactory.query()
     })
   }
+
+  // Remove favorite
+  this.remove_favorite = function(post) {
+    FavoriteFactory.remove({id: post.id})
+  }
 }
 
-// Show Post Controller Function
+// Show Post Controller
 function PostShowControllerFunction(PostFactory, $stateParams, $state) {
   this.post = PostFactory.get({ id: $stateParams.id })
   this.update = function() {
