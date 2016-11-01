@@ -1,5 +1,13 @@
 <h1>Template/Index</h1>
 
-<div data-ng-repeat="post in vm.posts">
+<h2>New Post</h2>
+<form method="POST">
+  <input placeholder="Title" type="text" data-ng-model="post.title" />
+  <input placeholder="Link" type="text" data-ng-model="post.link" />
+  <button type="button" data-ng-click="vm.create(post)">Submit</button>
+  <button type="button" data-ui-sref="instaIndex()">Cancel</button>
+</form>
+
+<div data-ng-repeat="post in vm.posts | orderBy: 'created_at':true">
   <p>{{post.title}}</p>
 </div>
