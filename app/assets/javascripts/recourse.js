@@ -20,9 +20,16 @@ angular
     PostFactoryFunction
   ])
 
+  // Declare factory for Favorites
+  .factory("FavoriteFactory", [
+    "$resource",
+    FavoriteFactoryFunction
+  ])
+
   // Declare controller for Post index
   .controller("PostIndexController", [
     "PostFactory",
+    "FavoriteFactory",
     PostIndexControllerFunction
   ])
 
@@ -30,6 +37,7 @@ angular
   .controller("PostShowController", [
     "PostFactory",
     "$stateParams",
+    "$state",
     PostShowControllerFunction
   ])
 
@@ -41,14 +49,24 @@ function PostFactoryFunction($resource) {
   // Route to API for ngResource
   return $resource("/api/posts/:id.json", {}, {
     create: { method: "POST" },
-    update: { method: "PUT" }
+    update: { method: "PUT" },
   })
 }
 
+// Favorites Factory Function
+function FavoriteFactoryFunction($resource) {
 
+  // Route to API for ngResource
+  return $resource("/api/posts/:id/favorite", {
+    id: '@id'
+  }, {
+    create: { method: "POST" },
+    delete: { method: "DELETE" }
+  })
+}
 
 // Index Post Controller Function
-function PostIndexControllerFunction(PostFactory) {
+function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
@@ -65,11 +83,35 @@ function PostIndexControllerFunction(PostFactory) {
       this.posts = PostFactory.query()
     })
   }
+
+  // Add favorites
+  this.add_favorite = function(post) {
+    console.log(post);
+    let newFavorite = new FavoriteFactory({
+      id: post.id
+    })
+    console.log(post.id);
+    newFavorite.$save().then( () => {
+      this.posts = PostFactory.query()
+    })
+  }
+
+  // Remove favorite
+  this.remove_favorite = function(post) {
+    FavoriteFactory.remove({id: post.id})
+  }
 }
 
-// Show Post Controller Function
-function PostShowControllerFunction(PostFactory, $stateParams) {
+// Show Post Controller
+function PostShowControllerFunction(PostFactory, $stateParams, $state) {
   this.post = PostFactory.get({ id: $stateParams.id })
+  this.update = function() {
+    this.post.$update({id: $stateParams.id})
+  }
+  this.delete = function() {
+    this.post.$delete({id: $stateParams.id})
+    $state.go("postIndex", {}, { reload: false })
+  }
 }
 
 
