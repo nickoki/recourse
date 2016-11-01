@@ -30,6 +30,7 @@ angular
   .controller("PostShowController", [
     "PostFactory",
     "$stateParams",
+    "$state",
     PostShowControllerFunction
   ])
 
@@ -68,10 +69,14 @@ function PostIndexControllerFunction(PostFactory) {
 }
 
 // Show Post Controller Function
-function PostShowControllerFunction(PostFactory, $stateParams) {
+function PostShowControllerFunction(PostFactory, $stateParams, $state) {
   this.post = PostFactory.get({ id: $stateParams.id })
   this.update = function() {
     this.post.$update({id: $stateParams.id})
+  }
+  this.delete = function() {
+    this.post.$delete({id: $stateParams.id})
+    $state.go("postIndex", {}, {reload: false})
   }
 }
 

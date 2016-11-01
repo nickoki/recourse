@@ -7,7 +7,7 @@ class Api::PostsController < ApplicationController
   before_action :authenticate_request!, only: [
     # :new, :create,
     #:edit, :update,
-    :destroy
+    # :destroy
   ]
 
   # GET /posts
