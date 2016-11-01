@@ -14,10 +14,22 @@ angular
     RouterFunction
   ])
 
+  // Declare factory for User module
+  .factory("UserFactory", [
+    "$resource",
+    UserFactoryFunction
+  ])
+
   // Declare factory for Post module
   .factory("PostFactory", [
     "$resource",
     PostFactoryFunction
+  ])
+
+  // Declare main controller for Recourse App
+  .controller("RecourseController", [
+    "UserFactory",
+    RecourseControllerFunction
   ])
 
   // Declare controller for Post index
@@ -35,6 +47,17 @@ angular
 
 
 
+// User Factory Function
+function UserFactoryFunction($resource) {
+
+  // Route to API for ngResource
+  return $resource("/auth_user", {}, {
+    signIn: {
+      method: "POST"
+    }
+  })
+}
+
 // Post Factory Function
 function PostFactoryFunction($resource) {
 
@@ -50,6 +73,24 @@ function PostFactoryFunction($resource) {
   })
 }
 
+
+
+// Recourse Main Controller Function
+function RecourseControllerFunction(UserFactory) {
+
+  this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
+
+  // Sign In method sends POST request to /auth_user
+  this.signIn = function(user) {
+    var recourseUser = new UserFactory({
+      email: user.email,
+      password: user.password
+    })
+    recourseUser.$save().then( () => {
+      localStorage.setItem('recourseUser', JSON.stringify(recourseUser))
+    })
+  }
+}
 
 
 // Index Post Controller Function
