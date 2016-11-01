@@ -1,8 +1,14 @@
 # app/controllers/authentications_controller.rb
+
 class AuthenticationsController < ApplicationController
 
+  # Method to authenticate user
   def authenticate_user
+
+    # Find user based on email
     user = User.find_for_database_authentication(email: params[:email])
+
+    # Check password, render payload
     if user.valid_password?(params[:password])
       render json: payload(user)
     else
@@ -10,7 +16,11 @@ class AuthenticationsController < ApplicationController
     end
   end
 
+
+
   private
+
+    # Create token payload
     def payload(user)
       return nil unless user and user.id
       {
