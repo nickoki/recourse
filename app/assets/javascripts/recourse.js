@@ -14,10 +14,16 @@ angular
     RouterFunction
   ])
 
-  // Declare factory for User module
-  .factory("UserFactory", [
+  // Declare factory for Token module
+  .factory("TokenFactory", [
     "$resource",
-    UserFactoryFunction
+    TokenFactoryFunction
+  ])
+
+  // Declare factory for Devise module
+  .factory("DeviseFactory", [
+    "$resource",
+    DeviseFactoryFunction
   ])
 
   // Declare factory for Post module
@@ -28,7 +34,8 @@ angular
 
   // Declare main controller for Recourse App
   .controller("RecourseController", [
-    "UserFactory",
+    "TokenFactory",
+    "DeviseFactory",
     RecourseControllerFunction
   ])
 
@@ -48,11 +55,22 @@ angular
 
 
 // User Factory Function
-function UserFactoryFunction($resource) {
+function TokenFactoryFunction($resource) {
 
-  // Route to API for ngResource
+  // Route to authentications controller for ngResource
   return $resource("/auth_user", {}, {
     signIn: {
+      method: "POST"
+    }
+  })
+}
+
+// Devise Factory Function
+function DeviseFactoryFunction($resource) {
+
+  // Route to Devise controllers for ngResource
+  return $resource("/users", {}, {
+    signUp: {
       method: "POST"
     }
   })
@@ -76,15 +94,27 @@ function PostFactoryFunction($resource) {
 
 
 // Recourse Main Controller Function
-function RecourseControllerFunction(UserFactory) {
+function RecourseControllerFunction(TokenFactory, DeviseFactory) {
 
   if (localStorage.getItem('recourseUser')) {
     this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
   }
 
+  // Sign Up method sends POST request to /users/sign_up (Devise)
+  this.signUp = function(user) {
+    let deviseUser = new DeviseFactory({
+      email: user.email,
+      password: user.password,
+      password_confirmation: user.password_confirmation
+    })
+    deviseUser.$save().then( () => {
+      signIn(user)
+    })
+  }
+
   // Sign In method sends POST request to /auth_user
   this.signIn = function(user) {
-    var recourseUser = new UserFactory({
+    let recourseUser = new TokenFactory({
       email: user.email,
       password: user.password
     })
@@ -94,6 +124,7 @@ function RecourseControllerFunction(UserFactory) {
     })
   }
 
+  // Sign Up method removes JWT from localStorage
   this.signOut = function() {
     localStorage.removeItem('recourseUser')
     this.currentUser = ""
