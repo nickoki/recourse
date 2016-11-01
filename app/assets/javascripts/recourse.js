@@ -38,9 +38,14 @@ angular
 // Post Factory Function
 function PostFactoryFunction($resource) {
 
+  let authToken = "Bearer " + "";
+
   // Route to API for ngResource
   return $resource("/api/posts/:id.json", {}, {
-    create: { method: "POST" },
+    create: {
+      method: "POST",
+      headers: { "Authorization:": authToken }
+    },
     update: { method: "PUT" }
   })
 }
