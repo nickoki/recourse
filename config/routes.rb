@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   # Define Devise routes, extend the RegistrationsController to custom AuthenticationsController
-  devise_for :users
+  devise_for :users, :defaults => { format: 'json' }, :controllers => { registrations: 'registrations' }
 
   # Route to authenticate user and assign JWT
   post 'auth_user' => 'authentications#authenticate_user'

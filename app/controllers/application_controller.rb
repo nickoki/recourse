@@ -2,7 +2,9 @@
 
 class ApplicationController < ActionController::Base
   # Protect API from from suspicious sessions
+  # protect_from_forgery unless: -> { request.format.json? }
   protect_from_forgery with: :null_session
+  # protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   # Let our controller read the current_user
   attr_reader :current_user

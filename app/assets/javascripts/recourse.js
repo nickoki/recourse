@@ -71,7 +71,10 @@ function DeviseFactoryFunction($resource) {
   // Route to Devise controllers for ngResource
   return $resource("/users", {}, {
     signUp: {
-      method: "POST"
+      method: "POST",
+      header: {
+        "X-CSRF-Token": $('meta[name="csrf-token"]').attr('content')
+      }
     }
   })
 }
@@ -102,13 +105,11 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory) {
 
   // Sign Up method sends POST request to /users/sign_up (Devise)
   this.signUp = function(user) {
-    let deviseUser = new DeviseFactory({
-      email: user.email,
-      password: user.password,
-      password_confirmation: user.password_confirmation
-    })
+    console.log($('meta[name="csrf-token"]').attr('content'));
+    let deviseUser = new DeviseFactory(user)
+    console.log(deviseUser);
     deviseUser.$save().then( () => {
-      this.signIn(user)
+      // this.signIn(user)
     })
   }
 
