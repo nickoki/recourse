@@ -78,7 +78,9 @@ function PostFactoryFunction($resource) {
 // Recourse Main Controller Function
 function RecourseControllerFunction(UserFactory) {
 
-  this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
+  if (localStorage.getItem('recourseUser')) {
+    this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
+  }
 
   // Sign In method sends POST request to /auth_user
   this.signIn = function(user) {
@@ -88,7 +90,13 @@ function RecourseControllerFunction(UserFactory) {
     })
     recourseUser.$save().then( () => {
       localStorage.setItem('recourseUser', JSON.stringify(recourseUser))
+      this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
     })
+  }
+
+  this.signOut = function() {
+    localStorage.removeItem('recourseUser')
+    this.currentUser = ""
   }
 }
 
