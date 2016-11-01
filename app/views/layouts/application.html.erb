@@ -33,31 +33,12 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/#/">Home</a></li>
             <!-- Button trigger modal -->
-            <a id="modalButton" href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">Click to open Modal</a>
-            <li><%= link_to 'Sign In', new_user_session_path %></li>
+            <li><a id="logInModalButton" href="/#/" data-toggle="modal" data-target="#logInModal">Sign In</a></li>
             <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-
-    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
-              <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div>
-            <div class="modal-body">
-              <h3>Modal Body</h3>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
     <% flash.each do |type, message| %>
       <div class="alert <%= bootstrap_class_for(type) %> fade in">
@@ -74,6 +55,26 @@
       </div>
     </div>
 
+    <div id="logInModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Sign In</h4>
+          </div>
+          <div class="modal-body">
+            <form method="POST">
+              <input placeholder="Email" type="text" data-ng-model="user.email" />
+              <input placeholder="Password" type="text" data-ng-model="user.password" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="vm.login(user)">Log In</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
   </body>
 
