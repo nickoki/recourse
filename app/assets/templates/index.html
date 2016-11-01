@@ -8,6 +8,6 @@
   <button type="button" data-ui-sref="instaIndex()">Cancel</button>
 </form>
 
-<div data-ng-repeat="post in vm.posts">
+<div data-ng-repeat="post in vm.posts | orderBy: 'created_at':true">
   <p>{{post.title}}</p>
 </div>

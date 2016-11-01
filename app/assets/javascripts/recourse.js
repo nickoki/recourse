@@ -56,8 +56,6 @@ function PostIndexControllerFunction(PostFactory) {
       // After save, re-query the API
       this.posts = PostFactory.query()
     })
-    console.log("CLICK");
-    // PostFactory.save({}, { title: post.title, link: post.link }).$promise
   }
 }
 
