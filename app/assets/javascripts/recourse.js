@@ -37,6 +37,8 @@ angular
 
 // Post Factory Function
 function PostFactoryFunction($resource) {
+
+  // Route to API for ngResource
   return $resource("/api/posts/:id.json", {}, {
     create: { method: "POST" },
     update: { method: "PUT" }
@@ -47,13 +49,19 @@ function PostFactoryFunction($resource) {
 
 // Index Post Controller Function
 function PostIndexControllerFunction(PostFactory) {
+
+  // Update posts object against API
   this.posts = PostFactory.query()
 
+  // Create method sends POST request to /api/posts
   this.create = function(post) {
-    var newPost = new PostFactory({ title: post.title, link: post.link, user_id: 1 })
+    var newPost = new PostFactory({
+      title: post.title,
+      link: post.link,
+      user_id: 1 // hardcoded for now
+    })
     newPost.$save().then( () => {
-
-      // After save, re-query the API
+      // After save, re-query the API (avoids page refresh)
       this.posts = PostFactory.query()
     })
   }
