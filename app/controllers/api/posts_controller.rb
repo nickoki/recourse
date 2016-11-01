@@ -6,7 +6,8 @@ class Api::PostsController < ApplicationController
 
   before_action :authenticate_request!, only: [
     # :new, :create,
-    :edit, :update, :destroy]
+    #:edit, :update, :destroy
+  ]
 
   # GET /posts
   def index
@@ -54,6 +55,9 @@ class Api::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
+    @post = Post.find(post_params[:post])
+
+    @post.update(post_params)
     # respond_to do |format|
     #   if @post.update(post_params)
     #     format.html { redirect_to @post, notice: 'Post was successfully updated.' }
@@ -84,6 +88,6 @@ class Api::PostsController < ApplicationController
     def post_params
       # params.require(:post).permit(:title, :link)
       # .require(:post) causing errors with API requests
-      params.permit(:title, :link, :user_id)
+      params.permit(:id, :level, :desc_what, :desc_why, :desc_who, :created_at, :updated_at, :pub_date)
     end
 end

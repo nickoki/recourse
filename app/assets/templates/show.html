@@ -1,2 +1,31 @@
-<h1>Show me the money</h1>
-{{ vm.post.title }}
+<h1>{{ vm.post.title }}</h1>
+<p><em>{{vm.post.user}}</em></p>
+<p><a href="{{ vm.post.link }}">View link at source</a></p>
+
+<form data-ng-submit="vm.update()">
+  <label>Title
+  <input type="text" data-ng-model="vm.post.title"></label>
+  <br>
+  <label for="">Link
+  <input type="text" data-ng-model="vm.post.link"></label>
+  <br>
+  <label for="">What does this resource cover?
+  <input type="text" data-ng-model="vm.post.desc_what"></label>
+  <br>
+  <label for="">What makes this a great resource?
+  <input type="text" data-ng-model="vm.post.desc_why"></label>
+  <br>
+  <label for="">Who is the ideal audience for this resource?
+  <input type="text" data-ng-model="vm.post.desc_who"></label>
+  <br>
+  <label for="">Original Publication Date
+  <input type="date" data-ng-model="vm.post.pub_date"></label>
+  <br>
+  <label for="">Difficulty Level
+  <input type="text" data-ng-model="vm.post.level"></label>
+  <br>
+  <label for="">User ID
+  <input type="text" data-ng-model="vm.post.user_id"></label>
+  <br>
+  <button>Save</button>
+</form>

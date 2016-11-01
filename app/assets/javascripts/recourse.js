@@ -70,6 +70,9 @@ function PostIndexControllerFunction(PostFactory) {
 // Show Post Controller Function
 function PostShowControllerFunction(PostFactory, $stateParams) {
   this.post = PostFactory.get({ id: $stateParams.id })
+  this.update = function() {
+    this.post.$update({id: $stateParams.id})
+  }
 }
 
 

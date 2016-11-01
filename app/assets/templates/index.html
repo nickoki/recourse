@@ -9,5 +9,5 @@
 </form>
 
 <div data-ng-repeat="post in vm.posts | orderBy: 'created_at':true">
-  <p>{{post.title}}</p>
+  <p><a data-ui-sref="postShow({id: post.id})">{{post.title}}</a></p>
 </div>
