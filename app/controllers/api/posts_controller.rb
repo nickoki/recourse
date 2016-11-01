@@ -79,6 +79,24 @@ class Api::PostsController < ApplicationController
     # end
   end
 
+  # FAVORITES!
+
+  def add_favorite
+    flash[:notice] = "ADDING FAVORITE!"
+    puts "ADDING FAVORITEEEEEEE"
+    @post = Post.find(post_params[:id])
+    @favorite = @post.favorites.new(user_id: 1)
+    if @favorite.save
+      flash[:notice] = "FAVORITE CREATED!"
+    else
+      flash[:alert] = "FAVORITE NOT CREATED"
+    end
+  end
+
+  def remove_favorite
+    @post = Post.find(post_params[:id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post

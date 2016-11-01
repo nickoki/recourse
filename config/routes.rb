@@ -8,7 +8,12 @@ Rails.application.routes.draw do
 
   # Define Posts controller routes
   namespace :api do
-    resources :posts
+    resources :posts do
+      member do
+        post 'favorite' => "posts#add_favorite"
+        delete 'favorite' => "posts#remove_favorite"
+      end
+    end
   end
 
   # Define Devise routes, extend the RegistrationsController to custom AuthenticationsController
@@ -17,4 +22,5 @@ Rails.application.routes.draw do
   # Route to authenticate user and assign JWT
   post 'auth_user' => 'authentications#authenticate_user'
 
+  # Route
 end

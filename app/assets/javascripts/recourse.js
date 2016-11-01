@@ -20,9 +20,16 @@ angular
     PostFactoryFunction
   ])
 
+  // Declare factory for Favorites
+  .factory("FavoriteFactory", [
+    "$resource",
+    FavoriteFactoryFunction
+  ])
+
   // Declare controller for Post index
   .controller("PostIndexController", [
     "PostFactory",
+    "FavoriteFactory",
     PostIndexControllerFunction
   ])
 
@@ -42,20 +49,26 @@ function PostFactoryFunction($resource) {
   // Route to API for ngResource
   return $resource("/api/posts/:id.json", {}, {
     create: { method: "POST" },
-    update: { method: "PUT" }
+    update: { method: "PUT" },
   })
 }
 
+// Favorites Factory Function
+function FavoriteFactoryFunction($resource) {
 
+  // Route to API for ngResource
+  return $resource("/api/posts/:id/favorite", {
+    id: '@id'
+  }, {
+    create: { method: "POST" }
+  })
+}
 
 // Index Post Controller Function
-function PostIndexControllerFunction(PostFactory) {
+function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
-
-  // Search
-  this.searchTerm = ''
 
   // Create method sends POST request to /api/posts
   this.create = function(post) {
@@ -69,6 +82,18 @@ function PostIndexControllerFunction(PostFactory) {
       this.posts = PostFactory.query()
     })
   }
+
+  // Add favorites
+  this.add_favorite = function(post) {
+    console.log(post);
+    let newFavorite = new FavoriteFactory({
+      id: post.id
+    })
+    console.log(post.id);
+    newFavorite.$save().then( () => {
+      this.posts = PostFactory.query()
+    })
+  }
 }
 
 // Show Post Controller Function
@@ -79,7 +104,7 @@ function PostShowControllerFunction(PostFactory, $stateParams, $state) {
   }
   this.delete = function() {
     this.post.$delete({id: $stateParams.id})
-    $state.go("postIndex", {}, {reload: false})
+    $state.go("postIndex", {}, { reload: false })
   }
 }
 
