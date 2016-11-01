@@ -108,7 +108,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory) {
       password_confirmation: user.password_confirmation
     })
     deviseUser.$save().then( () => {
-      signIn(user)
+      this.signIn(user)
     })
   }
 
