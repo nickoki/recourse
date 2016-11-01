@@ -70,6 +70,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
   // Update posts object against API
   this.posts = PostFactory.query()
 
+
   // Create method sends POST request to /api/posts
   this.create = function(post) {
     var newPost = new PostFactory({
