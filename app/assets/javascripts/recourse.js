@@ -109,7 +109,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory) {
     let deviseUser = new DeviseFactory(user)
     console.log(deviseUser);
     deviseUser.$save().then( () => {
-      // this.signIn(user)
+      this.signIn(user)
     })
   }
 
