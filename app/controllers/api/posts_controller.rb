@@ -1,12 +1,13 @@
 class Api::PostsController < ApplicationController
 
-  protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   before_action :authenticate_request!, only: [
     # :new, :create,
-    #:edit, :update, :destroy
+    #:edit, :update,
+    :destroy
   ]
 
   # GET /posts
@@ -55,8 +56,7 @@ class Api::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    @post = Post.find(post_params[:post])
-
+    @post = Post.find(post_params[:id])
     @post.update(post_params)
     # respond_to do |format|
     #   if @post.update(post_params)
@@ -71,7 +71,8 @@ class Api::PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
-    # @post.destroy
+    @post = Post.find(post_params[:id])
+    @post.destroy
     # respond_to do |format|
     #   format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
     #   format.json { head :no_content }
@@ -88,6 +89,6 @@ class Api::PostsController < ApplicationController
     def post_params
       # params.require(:post).permit(:title, :link)
       # .require(:post) causing errors with API requests
-      params.permit(:id, :level, :desc_what, :desc_why, :desc_who, :created_at, :updated_at, :pub_date)
+      params.permit(:id, :title, :link, :level, :desc_what, :desc_why, :desc_who, :user_id, :pub_date, :created_at, :updated_at)
     end
 end
