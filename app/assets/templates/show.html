@@ -1,7 +1,12 @@
 <h1>{{ vm.post.title }}</h1>
 <p><em>{{vm.post.user}}</em></p>
 <p><a href="{{ vm.post.link }}">View link at source</a></p>
+<h2>Favorites</h2>
+<div data-ng-repeat="favorite in vm.post.favorites">
+  {{favorite}}
+</div>
 
+<h2>Edit</h2>
 <form data-ng-submit="vm.update()">
   <label>Title
   <input type="text" data-ng-model="vm.post.title"></label>
