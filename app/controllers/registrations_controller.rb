@@ -9,10 +9,8 @@ class RegistrationsController < Devise::RegistrationsController
   respond_to 'json'
 
   def create
-    binding.pry
     build_resource
     @user = User.new(user_params)
-    binding.pry
     if resource.save
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
@@ -31,15 +29,14 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Signs in a user on sign up. You can overwrite this method in your own
   # RegistrationsController.
-  def sign_up(resource_name, resource)
-    sign_in(resource_name, resource)
-  end
+  # def sign_up(resource_name, resource)
+  #   sign_in(resource_name, resource)
+  # end
 
   private
 
   def user_params
     params.permit(:email, :password, :password_confirmation)
-    # params.permit!
   end
 
 end
