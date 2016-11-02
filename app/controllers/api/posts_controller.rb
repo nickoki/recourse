@@ -1,14 +1,15 @@
 class Api::PostsController < ApplicationController
 
+  # Protect API from malicious sessions
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
+  # Set @post DRYness
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
-  before_action :authenticate_request!, only: [ :create
-    # :new, :create,
-    #:edit, :update,
-    # :destroy
-  ]
+  # Check JWT for valid user, (maybe add :new and :edit)
+  before_action :authenticate_request!, only: [ :create, :update, :destroy ]
+
+
 
   # GET /posts
   def index
@@ -18,14 +19,8 @@ class Api::PostsController < ApplicationController
 
   # GET /posts/1
   def show
-    @post = Post.find(params[:id])
-    # @favorites = @post.favorites
+    # @post defined in before_action
     render :json => @post.to_json(:include => [:favorites])
-    # respond_to do |format|
-    #   format.html { render :show }
-    #   format.json { render json: @post  }
-    # end
-
   end
 
   # GET /posts/new
