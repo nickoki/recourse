@@ -237,25 +237,10 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
   // Update posts object against API
   this.posts = PostFactory.query()
 
+  // bound to the filter checkboxes. Will turn true if filter is on
   this.filters = {
     favorites: false,
     myPosts: false
-  }
-
-  this.favoriteFilterFunction = function(post){
-    if (this.filters.favorites) {
-      return !!this.check_favorites(post)
-    } else {
-      return true
-    }
-  }
-
-  this.myPostsFilterFunction = function(a, b, c, d) {
-    if (vm.filters.myPosts && vm.currentUser ) {
-      return post.user_id == vm.currentUser.id
-    } else {
-      return true
-    }
   }
 
   // Set front-end currentUser
