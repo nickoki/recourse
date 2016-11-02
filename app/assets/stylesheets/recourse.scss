@@ -30,6 +30,7 @@ $primary-dark:  darken($primary, 10%);
 
 body {
   font-family: $font;
+  font-size: 11pt;
 }
 
 a {
@@ -52,4 +53,11 @@ a {
 .panel-heading {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  .panel-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
 }
