@@ -5,6 +5,13 @@
 <div data-ng-repeat="favorite in vm.post.favorites">
   {{favorite}}
 </div>
+<h2>Votes</h2>
+<div data-ng-repeat="vote in vm.post.votes">
+  {{vote}}
+</div>
+
+<button data-ng-click="vm.vote('up')">Upvote</button>
+<button data-ng-click="vm.vote('down')">Downvote</button>
 
 <h2>Edit</h2>
 <form data-ng-submit="vm.update()">

@@ -62,8 +62,7 @@ angular
   // Declare controller for Post show
   .controller("PostShowController", [
     "PostFactory",
-    // do we want to allow favoriting on the show page
-    // "FavoriteFactory",
+    "FavoriteFactory",
     "VoteFactory",
     "$stateParams",
     "$state",
@@ -240,7 +239,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 }
 
 // Show Post Controller
-function PostShowControllerFunction(PostFactory, $stateParams, $state) {
+function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $stateParams, $state) {
 
   // Update post object against API
   this.post = PostFactory.get({ id: $stateParams.id })
@@ -271,6 +270,8 @@ function PostShowControllerFunction(PostFactory, $stateParams, $state) {
       vote: {
         vote_type: type
       }
+    }).$promise.then( () => {
+      this.post = PostFactory.get({ id: $stateParams.id })
     })
   }
 }
