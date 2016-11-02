@@ -18,13 +18,19 @@ $primary-saturation: 79%;
 $primary-brightness: 65%;
 
 // Define Colors
-$primary:        hsl($primary-hue, $primary-saturation, $primary-brightness);
-$primary-light:  lighten($primary, 10%);
-$primary-dark:   darken($primary, 10%);
-$primary-darker: darken($primary, 25%);
+$primary:         hsl($primary-hue, $primary-saturation, $primary-brightness);
+$primary-light:   lighten($primary, 10%);
+$primary-lighter: lighten($primary, 20%);
+$primary-dark:    darken($primary, 10%);
+$primary-darker:  darken($primary, 25%);
 
-$base:       hsl(0, 0%, 20%);
-$base-light: lighten($base, 10%);
+$base:         hsl(0, 0%, 20%);
+$base-light:   lighten($base, 10%);
+$base-lighter: lighten($base, 20%);
+$base-dark:    darken($base, 10%);
+$base-darker:  darken($base, 25%);
+
+
 
 
 
@@ -57,21 +63,85 @@ a {
   }
 }
 
+.upvote {
+  color: $base-lighter;
+
+  &:hover {
+    color: lighten(#8CC152, 10%);
+  }
+
+  .active {
+    color: #8CC152;
+
+    &:hover {
+      color: $base-lighter;
+    }
+  }
+}
+
+.downvote {
+  color: $base-lighter;
+
+  &:hover {
+    color: lighten(#DA4453, 10%);
+  }
+
+  .active {
+    color: #DA4453;
+
+    &:hover {
+      color: $base-lighter;
+    }
+  }
+}
+
 
 
 // ====================
 // PANEL
 // ====================
 
-.panel-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.post-table {
 
-  .panel-title {
-    font-size: 1.1em;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+  &:first-child {
+    border-top: 1px solid $base-lighter;
+  }
+
+  .post {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid $base-lighter;
+    padding: 0.6em 0;
+
+    .votes {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 0.8em;
+    }
+
+    .content {
+      width: 100%;
+      padding-right: 0.8em;
+
+      .heading {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 0.4em;
+
+        .title {
+          font-size: 1.3em;
+          font-weight: 700;
+        }
+      }
+
+      .body {
+
+        i {
+          margin-right: 0.2em;
+        }
+      }
+    }
   }
 }
 
