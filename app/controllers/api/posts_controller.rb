@@ -30,27 +30,14 @@ class Api::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    @post = Post.find(post_params[:id])
+    # @post defined in before_action
     @post.update(post_params)
-    # respond_to do |format|
-    #   if @post.update(post_params)
-    #     format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-    #     format.json { render :show, status: :ok, location: @post }
-    #   else
-    #     format.html { render :edit }
-    #     format.json { render json: @post.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   # DELETE /posts/1
   def destroy
-    @post = Post.find(post_params[:id])
+    # @post defined in before_action
     @post.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-    #   format.json { head :no_content }
-    # end
   end
 
   # FAVORITES!
