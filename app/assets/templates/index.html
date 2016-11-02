@@ -16,6 +16,16 @@
 </form>
 
 <div data-ng-repeat="post in vm.posts | filter:vm.searchTerm | orderBy: 'created_at':true">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{post.title}}</h3>
+      <a data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+    </div>
+    <div class="panel-body">
+      <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i> Go To Resource</a>
+    </div>
+  </div>
   <p>
     <a data-ui-sref="postShow({id: post.id})">{{post.title}}</a> |
     <a data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a> |

@@ -8,32 +8,48 @@
 
 $font: 'Lato', sans-serif;
 
-$purple: #6441A5;
-$light-purple: #9D50BB;
-$gradient-purple: linear-gradient(to left, #9D50BB , #6441A5);
+// $gradient-purple: linear-gradient(to left, #9D50BB , #6441A5);
 
 
 // Config Colors
-$tomato-hue:        9;
-$tomato-saturation: 100%;
-$tomato-brightness: 64%;
+// tomato = hsl(9, 100%, 64%)
+$primary-hue:        9;
+$primary-saturation: 100%;
+$primary-brightness: 64%;
 
 // Base Colors
-$tomato:       hsl($tomato-hue, $tomato-saturation, $tomato-brightness);
-$tomato-light: lighten($tomato, 10%);
-$tomato-dark:  darken($tomato, 10%);
+$primary:       hsl($primary-hue, $primary-saturation, $primary-brightness);
+$primary-light: lighten($primary, 10%);
+$primary-dark:  darken($primary, 10%);
+
+
 
 // ====================
 // MAIN
 // ====================
 
+body {
+  font-family: $font;
+}
+
 a {
   text-decoration: none !important;
-  color: $tomato;
+  color: $primary;
   cursor: pointer;
   transition: 0.4s;
 
   &:hover {
-    color: $tomato-light;
+    color: $primary-light;
   }
+}
+
+
+
+// ====================
+// PANEL
+// ====================
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
 }
