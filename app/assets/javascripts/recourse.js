@@ -142,8 +142,9 @@ function FavoriteFactoryFunction($resource) {
 // Recourse Main Controller Function
 function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 
+  // Set front-end currentUser
   if (localStorage.getItem('recourseUser')) {
-    this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
+    this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user
   }
 
   // Sign Up method sends POST request to /users/sign_up (Devise)
@@ -162,7 +163,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
     })
     recourseUser.$save().then( () => {
       localStorage.setItem('recourseUser', JSON.stringify(recourseUser))
-      this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
+      this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user
       // $state.go("postIndex", {}, { reload: true })
       location.reload() // jank af
     })
@@ -183,6 +184,11 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
   // Update posts object against API
   this.posts = PostFactory.query()
 
+  // Set front-end currentUser
+  if (localStorage.getItem('recourseUser')) {
+    this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user
+  }
+
   // Create method sends POST request to /api/posts
   this.create = function(post) {
     PostFactory.create({
@@ -191,6 +197,13 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
     }).$promise.then( () => {
       // After save, re-query the API (avoids page refresh)
       this.posts = PostFactory.query()
+    })
+  }
+
+  // Check favorites method checks if currentUser has favorited a post
+  this.check_favorites = function(post) {
+    return post.favorites.some( fav => {
+      return fav.user_id == this.currentUser.id
     })
   }
 
