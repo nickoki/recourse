@@ -59,6 +59,8 @@ gem 'jwt', '~> 1.5', '>= 1.5.6'
 gem 'figaro'
 # Use Bootstrap for CSS awesomeness
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
+# Use Font Awesome for icons
+gem 'font-awesome-rails'
 # ANGULAR
 gem 'angularjs-rails', '~> 1.5', '>= 1.5.8'
 # Use Angular Rails Templates to add angular views to Rails pipeline
