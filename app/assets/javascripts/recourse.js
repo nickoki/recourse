@@ -121,7 +121,6 @@ function FavoriteFactoryFunction($resource) {
   if (localStorage.getItem('recourseUser')) {
     authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
   }
-  console.log(authToken);
 
   // Route to API for ngResource
   return $resource("/api/posts/:id/favorite.json", {
@@ -147,9 +146,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory) {
 
   // Sign Up method sends POST request to /users/sign_up (Devise)
   this.signUp = function(user) {
-    console.log($('meta[name="csrf-token"]').attr('content'));
     let deviseUser = new DeviseFactory(user)
-    console.log(deviseUser);
     deviseUser.$save().then( () => {
       this.signIn(user)
     })
