@@ -5,7 +5,8 @@ angular
   .module("recourse", [
     "ui.router",
     "templates",
-    "ngResource"
+    "ngResource",
+    "angular-moment"
   ])
 
   // Congifure router function
