@@ -71,6 +71,32 @@ angular
     PostShowControllerFunction
   ])
 
+  // filter by current user's posts
+  .filter('myPosts', function () {
+    return function (posts, vm) {
+      return posts.filter(function (post) {
+        if (vm.filters.myPosts && vm.currentUser ) {
+          return post.user_id == vm.currentUser.id
+        } else {
+          return true
+        }
+      });
+    };
+  })
+
+  // filter by favorited posts
+  .filter('myFavorites', function () {
+    return function (posts, vm) {
+      return posts.filter(function (post) {
+        if (vm.filters.favorites) {
+          return !!vm.check_favorites(post)
+        } else {
+          return true
+        }
+      });
+    };
+  });
+
 
 
 // User Factory Function
@@ -205,11 +231,17 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 }
 
 
-// Index Post Controller Function
+//  Post Index Controller Function
 function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
+
+  // bound to the filter checkboxes. Will turn true if filter is on
+  this.filters = {
+    favorites: false,
+    myPosts: false
+  }
 
   // Set front-end currentUser
   if (localStorage.getItem('recourseUser')) {
