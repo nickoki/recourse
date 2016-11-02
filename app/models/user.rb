@@ -7,9 +7,9 @@ class User < ApplicationRecord
 
   has_many :posts
 
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   has_many :posts, through: :favorites
-  
-  has_many :votes
+
+  has_many :votes, dependent: :destroy
   has_many :posts, through: :votes
 end
