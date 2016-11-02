@@ -40,9 +40,9 @@ class Api::PostsController < ApplicationController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
-    # @post = Post.create! post_params
-    @post.save
+    # @post = Post.new(post_params)
+    @post = Post.create!(post_params.merge(user: current_user))
+    # @post.save
 
     # respond_to do |format|
     #   if @post.save
