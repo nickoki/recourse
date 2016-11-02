@@ -23,16 +23,6 @@ class Api::PostsController < ApplicationController
     render :json => @post.to_json(:include => [:favorites])
   end
 
-  # GET /posts/new
-  def new
-    # relying on Angular Factories to handle all this biznas
-    # @post = Post.new
-  end
-
-  # GET /posts/1/edit
-  def edit
-  end
-
   # POST /posts
   def create
     # @post = Post.new(post_params)
