@@ -32,16 +32,24 @@ angular
     PostFactoryFunction
   ])
 
+<<<<<<< HEAD
   // Declare main controller for Recourse App
   .controller("RecourseController", [
     "TokenFactory",
     "DeviseFactory",
     RecourseControllerFunction
+=======
+  // Declare factory for Favorites
+  .factory("FavoriteFactory", [
+    "$resource",
+    FavoriteFactoryFunction
+>>>>>>> a568dc7c8d8d2d9c876459950ed5733572ed5ef2
   ])
 
   // Declare controller for Post index
   .controller("PostIndexController", [
     "PostFactory",
+    "FavoriteFactory",
     PostIndexControllerFunction
   ])
 
@@ -49,6 +57,7 @@ angular
   .controller("PostShowController", [
     "PostFactory",
     "$stateParams",
+    "$state",
     PostShowControllerFunction
   ])
 
@@ -94,7 +103,17 @@ function PostFactoryFunction($resource) {
   })
 }
 
+// Favorites Factory Function
+function FavoriteFactoryFunction($resource) {
 
+  // Route to API for ngResource
+  return $resource("/api/posts/:id/favorite", {
+    id: '@id'
+  }, {
+    create: { method: "POST" },
+    delete: { method: "DELETE" }
+  })
+}
 
 // Recourse Main Controller Function
 function RecourseControllerFunction(TokenFactory, DeviseFactory) {
@@ -134,7 +153,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory) {
 
 
 // Index Post Controller Function
-function PostIndexControllerFunction(PostFactory) {
+function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
@@ -151,11 +170,35 @@ function PostIndexControllerFunction(PostFactory) {
       this.posts = PostFactory.query()
     })
   }
+
+  // Add favorites
+  this.add_favorite = function(post) {
+    console.log(post);
+    let newFavorite = new FavoriteFactory({
+      id: post.id
+    })
+    console.log(post.id);
+    newFavorite.$save().then( () => {
+      this.posts = PostFactory.query()
+    })
+  }
+
+  // Remove favorite
+  this.remove_favorite = function(post) {
+    FavoriteFactory.remove({id: post.id})
+  }
 }
 
-// Show Post Controller Function
-function PostShowControllerFunction(PostFactory, $stateParams) {
+// Show Post Controller
+function PostShowControllerFunction(PostFactory, $stateParams, $state) {
   this.post = PostFactory.get({ id: $stateParams.id })
+  this.update = function() {
+    this.post.$update({id: $stateParams.id})
+  }
+  this.delete = function() {
+    this.post.$delete({id: $stateParams.id})
+    $state.go("postIndex", {}, { reload: false })
+  }
 }
 
 
