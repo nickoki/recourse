@@ -118,7 +118,7 @@ function FavoriteFactoryFunction($resource) {
   return $resource("/api/posts/:id/favorite.json", {
     id: '@id'
   }, {
-    add_favorite: {
+    create: {
       method: "POST",
       headers: { "Authorization": authToken }
     },
