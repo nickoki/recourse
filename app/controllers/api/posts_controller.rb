@@ -7,7 +7,7 @@ class Api::PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # Check JWT for valid user, (maybe add :new and :edit)
-  before_action :authenticate_request!, only: [ :create, :update, :destroy ]
+  before_action :authenticate_request!, only: [ :create, :update, :destroy, :add_favorite, :remove_favorite ]
 
 
 
@@ -40,20 +40,29 @@ class Api::PostsController < ApplicationController
     @post.destroy
   end
 
+
+
   # FAVORITES!
+  # POST /posts/1/favorite
   def add_favorite
+    # @post defined in before_action
     @post = Post.find(post_params[:id])
-    @favorite = @post.favorites.new(user_id: 1)
+    @favorite = @post.favorites.new(user: current_user)
     @favorite.save
   end
 
+  # DELETE /posts/1/favorite
   def remove_favorite
+    # @post defined in before_action
     @post = Post.find(post_params[:id])
-    @favorite = @post.favorites.find_by(user_id: 1)
+    @favorite = @post.favorites.find_by(user: current_user)
     @favorite.destroy
   end
 
+
+
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])

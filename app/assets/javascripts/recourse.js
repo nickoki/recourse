@@ -90,7 +90,10 @@ function DeviseFactoryFunction($resource) {
 // Post Factory Function
 function PostFactoryFunction($resource) {
 
-  let authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
+  let authToken = ""
+  if (localStorage.getItem('recourseUser')) {
+    authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
+  }
 
   // Route to API for ngResource
   return $resource("/api/posts/:id.json", {}, {
@@ -105,11 +108,20 @@ function PostFactoryFunction($resource) {
 // Favorites Factory Function
 function FavoriteFactoryFunction($resource) {
 
+  let authToken = ""
+  if (localStorage.getItem('recourseUser')) {
+    authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
+  }
+  console.log(authToken);
+
   // Route to API for ngResource
-  return $resource("/api/posts/:id/favorite", {
+  return $resource("/api/posts/:id/favorite.json", {
     id: '@id'
   }, {
-    create: { method: "POST" },
+    create: {
+      method: "POST",
+      headers: { "Authorization": authToken }
+    },
     delete: { method: "DELETE" }
   })
 }
