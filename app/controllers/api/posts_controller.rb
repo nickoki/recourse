@@ -30,10 +30,8 @@ class Api::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    binding.pry
     # @post defined in before_action
     @post.update(post_params)
-    binding.pry
   end
 
   # DELETE /posts/1
