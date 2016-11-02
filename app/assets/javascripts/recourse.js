@@ -171,6 +171,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
   this.signOut = function() {
     localStorage.removeItem('recourseUser')
     this.currentUser = ""
+    location.reload()
   }
 }
 
