@@ -1,0 +1,37 @@
+<h1>{{ vm.post.title }}</h1>
+<p><em>{{vm.post.user}}</em></p>
+<p><a href="{{ vm.post.link }}">View link at source</a></p>
+<h2>Favorites</h2>
+<div data-ng-repeat="favorite in vm.post.favorites">
+  {{favorite}}
+</div>
+
+<h2>Edit</h2>
+<form data-ng-submit="vm.update()">
+  <label>Title</label>
+  <input type="text" id="edit-title" data-ng-model="vm.post.title">
+  <br>
+  <label for="edit-link">Link</label>
+  <input type="text" id="edit-link" data-ng-model="vm.post.link">
+  <br>
+  <label for="edit-desc-what">What does this resource cover?</label>
+  <input type="text" id="edit-desc-what" data-ng-model="vm.post.desc_what">
+  <br>
+  <label for="edit-desc-why">What makes this a great resource?</label>
+  <input type="text" id="edit-desc-why" data-ng-model="vm.post.desc_why">
+  <br>
+  <label for="edit-desc-who">Who is the ideal audience for this res</label>ource?
+  <input type="text" id="edit-desc-who" data-ng-model="vm.post.desc_who">
+  <br>
+  <label for="edit-pub-date">Original Publication Date</label>
+  <input type="date" id="edit-pub-date" data-ng-model="vm.post.pub_date">
+  <br>
+  <label for="edit-level">Difficulty Level</label>
+  <input type="text" id="edit-level" data-ng-model="vm.post.level">
+  <br>
+  <label for="edit-user">User ID</label>
+  <input type="text" id="edit-user" data-ng-model="vm.post.user_id">
+  <br>
+  <button>Save</button>
+  <button type="button" data-ng-click="vm.delete()">DELETE!</button>
+</form>

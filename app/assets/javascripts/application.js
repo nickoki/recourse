@@ -13,40 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
 //= require angular
-//= require angular-resource
-//= require angular-ui-router
+//= require angular-rails-templates
+//= require_tree ../templates
+//= require_tree .
 //= require bootstrap
-
-angular
-  .module("recourse", [
-    "ui.router",
-    "ngResource"
-  ])
-  .config([
-    "$stateProvider",
-    RouterFunction
-  ])
-  .factory("PostFactory", [
-    "$resource",
-    PostFactoryFunction
-  ])
-  .controller("PostIndexController", [
-    "PostFactory",
-    PostIndexControllerFunction
-  ])
-
-function PostFactoryFunction($resource) {
-  return $resource("http://localhost:3000/posts/:id.json", {}, {
-    update: {method: "PUT"}
-  })
-}
-
-function PostIndexControllerFunction(PostFactory) {
-  this.posts = PostFactory.query()
-}
-
-function RouterFunction() {
-  // this is a placeholder
-}
+//= require bootstrap/modal

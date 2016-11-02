@@ -1,0 +1,24 @@
+<h1>Template/Index</h1>
+
+<h2>New Post</h2>
+<form method="POST">
+  <input placeholder="Title" type="text" data-ng-model="post.title" />
+  <input placeholder="Link" type="text" data-ng-model="post.link" />
+  <button type="button" data-ng-click="vm.create(post)">Submit</button>
+  <button type="button" data-ui-sref="instaIndex()">Cancel</button>
+</form>
+
+<!-- Refactor -->
+<h2>Search</h2>
+<form>
+  <label for="search-box">Search</label>
+  <input id="search-box"type="text" data-ng-model="vm.searchTerm">
+</form>
+
+<div data-ng-repeat="post in vm.posts | filter:vm.searchTerm | orderBy: 'created_at':true">
+  <p>
+    <a data-ui-sref="postShow({id: post.id})">{{post.title}}</a> |
+    <button data-ng-click="vm.add_favorite(post)">add favorite</button> |
+    <button data-ng-click="vm.remove_favorite(post)">remove favorite</button>
+  </p>
+</div>
