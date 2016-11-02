@@ -159,12 +159,10 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 
   // Create method sends POST request to /api/posts
   this.create = function(post) {
-    var newPost = new PostFactory({
+    PostFactory.create({
       title: post.title,
-      link: post.link,
-      user_id: 1 // hardcoded for now
-    })
-    newPost.$save().then( () => {
+      link: post.link
+    }).$promise.then( () => {
       // After save, re-query the API (avoids page refresh)
       this.posts = PostFactory.query()
     })
@@ -184,7 +182,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 
   // Remove favorite
   this.remove_favorite = function(post) {
-    FavoriteFactory.remove({id: post.id})
+    FavoriteFactory.remove({ id: post.id })
   }
 }
 
