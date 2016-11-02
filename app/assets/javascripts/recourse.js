@@ -106,6 +106,10 @@ function PostFactoryFunction($resource) {
     update: {
       method: "PUT",
       headers: { "Authorization": authToken }
+    },
+    delete: {
+      method: "DELETE",
+      headers: { "Authorization": authToken }
     }
   })
 }
@@ -223,9 +227,14 @@ function PostShowControllerFunction(PostFactory, $stateParams, $state) {
     })
   }
 
+  // Delete method sends DELETE request to /api/posts/:id
   this.delete = function() {
-    this.post.$delete({id: $stateParams.id})
-    $state.go("postIndex", {}, { reload: false })
+    PostFactory.delete({
+      id: this.post.id,
+      post: this.post
+    }).$promise.then( () => {
+      $state.go("postIndex", {}, { reload: false })
+    })
   }
 }
 
