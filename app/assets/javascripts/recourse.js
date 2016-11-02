@@ -56,6 +56,7 @@ angular
   .controller("PostIndexController", [
     "PostFactory",
     "FavoriteFactory",
+    "VoteFactory",
     PostIndexControllerFunction
   ])
 
@@ -203,7 +204,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 
 
 // Index Post Controller Function
-function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
+function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
@@ -236,6 +237,19 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
       this.posts = PostFactory.query()
     })
   }
+
+  this.vote = function(post, type) {
+    VoteFactory.vote({
+      id: post.id,
+      vote: {
+        vote_type: type
+      }
+    }).$promise.then( () => {
+      this.posts = PostFactory.query()
+    })
+  }
+
+
 }
 
 // Show Post Controller
@@ -261,6 +275,24 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
       post: this.post
     }).$promise.then( () => {
       $state.go("postIndex", {}, { reload: false })
+    })
+  }
+
+  // Add Favorite method sends POST request to /api/posts/:id/favorite
+  this.add_favorite = function() {
+    FavoriteFactory.create({
+      id: this.post.id
+    }).$promise.then( () => {
+      this.post = PostFactory.get({ id: $stateParams.id })
+    })
+  }
+
+  // Remove Favorite method sends DELETE request to /api/posts/:id/favorite
+  this.remove_favorite = function() {
+    FavoriteFactory.delete({
+      id: this.post.id
+    }).$promise.then( () => {
+      this.post = PostFactory.get({ id: $stateParams.id })
     })
   }
 
