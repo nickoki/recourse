@@ -121,10 +121,13 @@ a {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       padding: 0 0.8em;
 
-      .upvote {
-        margin-bottom: 0.4em;
+      .score {
+        margin: 0.2em 0;
+        font-size: 0.9em;
+        color: $base-lighter;
       }
 
       i {

@@ -263,7 +263,21 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
     })
   }
 
+  // Count votes
+  this.count_votes = function(post) {
+    let upvotes = 0
+    let downvotes = 0
 
+    for (let i = 0; i < post.votes.length; i++) {
+      console.log(post, i);
+      if (post.votes[i].vote_type == "up") {
+        upvotes++
+      } else if (post.votes[i].vote_type == "down") {
+        downvotes++
+      }
+    }
+    return (upvotes - downvotes)
+  }
 }
 
 // Show Post Controller
