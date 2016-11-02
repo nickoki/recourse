@@ -1,4 +1,15 @@
-<div class="col-md-9">
+<div class="col-md-3 col-md-push-9">
+  <div class="well well-sm">
+    <h4>Search</h4>
+    <input id="search-box"type="text" data-ng-model="vm.searchTerm">
+    <h4>Filter</h4>
+    <label><input type="checkbox" />My Favorites</label>
+    <label><input type="checkbox" />My Posts</label>
+  </div>
+  <button type="button" class="btn btn-default" id="signUpModalButton" data-toggle="modal" data-target="#newPostModal">New Post</button>
+</div>
+
+<div class="col-md-9 col-md-pull-3">
   <div data-ng-repeat="post in vm.posts | filter:vm.searchTerm | orderBy: 'created_at':true">
 
     <div class="panel panel-default">
@@ -14,16 +25,6 @@
     </div>
 
   </div>
-</div>
-<div class="col-md-3">
-  <div class="well well-sm">
-    <h4>Search</h4>
-    <input id="search-box"type="text" data-ng-model="vm.searchTerm">
-    <h4>Filter</h4>
-    <label><input type="checkbox" />My Favorites</label>
-    <label><input type="checkbox" />My Posts</label>
-  </div>
-  <button type="button" class="btn btn-default" id="signUpModalButton" data-toggle="modal" data-target="#newPostModal">New Post</button>
 </div>
 
 
