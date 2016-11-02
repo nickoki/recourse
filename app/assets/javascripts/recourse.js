@@ -39,6 +39,12 @@ angular
     FavoriteFactoryFunction
   ])
 
+  // Declare factory for Votes
+  .factory("VoteFactory", [
+    "$resource",
+    VoteFactoryFunction
+  ])
+
   // Declare main controller for Recourse App
   .controller("RecourseController", [
     "TokenFactory",
@@ -51,12 +57,15 @@ angular
   .controller("PostIndexController", [
     "PostFactory",
     "FavoriteFactory",
+    "VoteFactory",
     PostIndexControllerFunction
   ])
 
   // Declare controller for Post show
   .controller("PostShowController", [
     "PostFactory",
+    "FavoriteFactory",
+    "VoteFactory",
     "$stateParams",
     "$state",
     PostShowControllerFunction
@@ -139,6 +148,24 @@ function FavoriteFactoryFunction($resource) {
   })
 }
 
+function VoteFactoryFunction($resource) {
+
+  let authToken = ""
+  if (localStorage.getItem('recourseUser')) {
+    authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
+  }
+
+  // Route to API for ngResource
+  return $resource("/api/posts/:id/vote.json", {
+    id: '@id'
+  }, {
+    vote: {
+      method: "POST",
+      headers: { "Authorization": authToken }
+    }
+  })
+}
+
 // Recourse Main Controller Function
 function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 
@@ -179,7 +206,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 
 
 // Index Post Controller Function
-function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
+function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
@@ -224,10 +251,23 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
       this.posts = PostFactory.query()
     })
   }
+
+  this.vote = function(post, type) {
+    VoteFactory.vote({
+      id: post.id,
+      vote: {
+        vote_type: type
+      }
+    }).$promise.then( () => {
+      this.posts = PostFactory.query()
+    })
+  }
+
+
 }
 
 // Show Post Controller
-function PostShowControllerFunction(PostFactory, $stateParams, $state) {
+function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $stateParams, $state) {
 
   // Update post object against API
   this.post = PostFactory.get({ id: $stateParams.id })
@@ -249,6 +289,35 @@ function PostShowControllerFunction(PostFactory, $stateParams, $state) {
       post: this.post
     }).$promise.then( () => {
       $state.go("postIndex", {}, { reload: false })
+    })
+  }
+
+  // Add Favorite method sends POST request to /api/posts/:id/favorite
+  this.add_favorite = function() {
+    FavoriteFactory.create({
+      id: this.post.id
+    }).$promise.then( () => {
+      this.post = PostFactory.get({ id: $stateParams.id })
+    })
+  }
+
+  // Remove Favorite method sends DELETE request to /api/posts/:id/favorite
+  this.remove_favorite = function() {
+    FavoriteFactory.delete({
+      id: this.post.id
+    }).$promise.then( () => {
+      this.post = PostFactory.get({ id: $stateParams.id })
+    })
+  }
+
+  this.vote = function(type) {
+    VoteFactory.vote({
+      id: this.post.id,
+      vote: {
+        vote_type: type
+      }
+    }).$promise.then( () => {
+      this.post = PostFactory.get({ id: $stateParams.id })
     })
   }
 }
