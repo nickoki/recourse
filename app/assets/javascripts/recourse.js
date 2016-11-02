@@ -6,7 +6,7 @@ angular
     "ui.router",
     "templates",
     "ngResource",
-    "angular-moment"
+    "angularMoment"
   ])
 
   // Congifure router function

@@ -7,7 +7,7 @@
         <a data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a>
       </div>
       <div class="panel-body">
-        <p>{{ post.created_at | date }}</p>
+        <span am-time-ago="post.created_at | amParse:'YYYY.MM.DD HH:mm:ss'"></span>
         <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i> Go To Resource</a>
       </div>
     </div>
