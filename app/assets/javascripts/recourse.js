@@ -84,6 +84,8 @@ function TokenFactoryFunction($resource) {
   })
 }
 
+
+
 // Devise Factory Function
 function DeviseFactoryFunction($resource) {
 
@@ -97,6 +99,8 @@ function DeviseFactoryFunction($resource) {
     }
   })
 }
+
+
 
 // Post Factory Function
 function PostFactoryFunction($resource) {
@@ -125,6 +129,8 @@ function PostFactoryFunction($resource) {
   })
 }
 
+
+
 // Favorites Factory Function
 function FavoriteFactoryFunction($resource) {
 
@@ -148,6 +154,8 @@ function FavoriteFactoryFunction($resource) {
   })
 }
 
+
+
 function VoteFactoryFunction($resource) {
 
   let authToken = ""
@@ -165,6 +173,8 @@ function VoteFactoryFunction($resource) {
     }
   })
 }
+
+
 
 // Recourse Main Controller Function
 function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
@@ -203,6 +213,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
     location.reload()
   }
 }
+
 
 
 // Index Post Controller Function
@@ -252,6 +263,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
     })
   }
 
+  // Vote method sends POST request to /api/posts/:id/vote
   this.vote = function(post, type) {
     VoteFactory.vote({
       id: post.id,
@@ -262,9 +274,9 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
       this.posts = PostFactory.query()
     })
   }
-
-
 }
+
+
 
 // Show Post Controller
 function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $stateParams, $state) {
@@ -310,6 +322,7 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
     })
   }
 
+  // Vote method sends POST request to /api/posts/:id/vote
   this.vote = function(type) {
     VoteFactory.vote({
       id: this.post.id,
