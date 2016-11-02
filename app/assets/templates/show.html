@@ -8,29 +8,29 @@
 
 <h2>Edit</h2>
 <form data-ng-submit="vm.update()">
-  <label>Title
-  <input type="text" data-ng-model="vm.post.title"></label>
+  <label>Title</label>
+  <input type="text" id="edit-title" data-ng-model="vm.post.title">
   <br>
-  <label for="">Link
-  <input type="text" data-ng-model="vm.post.link"></label>
+  <label for="edit-link">Link</label>
+  <input type="text" id="edit-link" data-ng-model="vm.post.link">
   <br>
-  <label for="">What does this resource cover?
-  <input type="text" data-ng-model="vm.post.desc_what"></label>
+  <label for="edit-desc-what">What does this resource cover?</label>
+  <input type="text" id="edit-desc-what" data-ng-model="vm.post.desc_what">
   <br>
-  <label for="">What makes this a great resource?
-  <input type="text" data-ng-model="vm.post.desc_why"></label>
+  <label for="edit-desc-why">What makes this a great resource?</label>
+  <input type="text" id="edit-desc-why" data-ng-model="vm.post.desc_why">
   <br>
-  <label for="">Who is the ideal audience for this resource?
-  <input type="text" data-ng-model="vm.post.desc_who"></label>
+  <label for="edit-desc-who">Who is the ideal audience for this res</label>ource?
+  <input type="text" id="edit-desc-who" data-ng-model="vm.post.desc_who">
   <br>
-  <label for="">Original Publication Date
-  <input type="date" data-ng-model="vm.post.pub_date"></label>
+  <label for="edit-pub-date">Original Publication Date</label>
+  <input type="date" id="edit-pub-date" data-ng-model="vm.post.pub_date">
   <br>
-  <label for="">Difficulty Level
-  <input type="text" data-ng-model="vm.post.level"></label>
+  <label for="edit-level">Difficulty Level</label>
+  <input type="text" id="edit-level" data-ng-model="vm.post.level">
   <br>
-  <label for="">User ID
-  <input type="text" data-ng-model="vm.post.user_id"></label>
+  <label for="edit-user">User ID</label>
+  <input type="text" id="edit-user" data-ng-model="vm.post.user_id">
   <br>
   <button>Save</button>
   <button type="button" data-ng-click="vm.delete()">DELETE!</button>
