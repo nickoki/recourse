@@ -9,7 +9,7 @@ class AuthenticationsController < ApplicationController
     user = User.find_for_database_authentication(email: params[:email])
 
     # Check password, render payload
-    if user.valid_password?(params[:password])
+    if user && user.valid_password?(params[:password])
       render json: payload(user)
     else
       render json: { errors: ['Invalid Username/Password'] }, status: :unauthorized
