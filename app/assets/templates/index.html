@@ -1,10 +1,12 @@
 <div class="col-md-3 col-md-push-9">
   <div class="well well-sm">
-    <h4>Search</h4>
-    <input id="search-box"type="text" data-ng-model="vm.searchTerm">
-    <h4>Filter</h4>
-    <label><input type="checkbox" />My Favorites</label>
-    <label><input type="checkbox" />My Posts</label>
+    <form>
+      <h4>Search</h4>
+      <input id="search-box"type="text" data-ng-model="vm.searchTerm">
+      <h4>Filter</h4>
+      <label><input type="checkbox" />My Favorites</label>
+      <label><input type="checkbox" />My Posts</label>
+    </form>
   </div>
   <button type="button" class="btn btn-default" id="signUpModalButton" data-toggle="modal" data-target="#newPostModal">New Post</button>
 </div>
