@@ -122,7 +122,10 @@ function FavoriteFactoryFunction($resource) {
       method: "POST",
       headers: { "Authorization": authToken }
     },
-    delete: { method: "DELETE" }
+    delete: {
+      method: "DELETE",
+      headers: { "Authorization": authToken }
+    }
   })
 }
 
@@ -189,20 +192,13 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
     })
   }
 
-  // this.add_favorite = function(post) {
-  //   console.log(post);
-  //   let newFavorite = new FavoriteFactory({
-  //     id: post.id
-  //   })
-  //   console.log(post.id);
-  //   newFavorite.$save().then( () => {
-  //     this.posts = PostFactory.query()
-  //   })
-  // }
-
-  // Remove favorite
+  // Remove Favorite method sends DELETE request to /api/posts/:id/favorite
   this.remove_favorite = function(post) {
-    FavoriteFactory.remove({ id: post.id })
+    FavoriteFactory.delete({
+      id: post.id
+    }).$promise.then( () => {
+      this.posts = PostFactory.query()
+    })
   }
 }
 
