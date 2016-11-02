@@ -32,18 +32,17 @@ angular
     PostFactoryFunction
   ])
 
-<<<<<<< HEAD
+  // Declare factory for Favorites
+  .factory("FavoriteFactory", [
+    "$resource",
+    FavoriteFactoryFunction
+  ])
+
   // Declare main controller for Recourse App
   .controller("RecourseController", [
     "TokenFactory",
     "DeviseFactory",
     RecourseControllerFunction
-=======
-  // Declare factory for Favorites
-  .factory("FavoriteFactory", [
-    "$resource",
-    FavoriteFactoryFunction
->>>>>>> a568dc7c8d8d2d9c876459950ed5733572ed5ef2
   ])
 
   // Declare controller for Post index
