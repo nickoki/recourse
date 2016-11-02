@@ -96,12 +96,17 @@ function PostFactoryFunction($resource) {
   }
 
   // Route to API for ngResource
-  return $resource("/api/posts/:id.json", {}, {
+  return $resource("/api/posts/:id.json", {
+    id: '@id'
+  }, {
     create: {
       method: "POST",
       headers: { "Authorization": authToken }
     },
-    update: { method: "PUT" }
+    update: {
+      method: "PUT",
+      headers: { "Authorization": authToken }
+    }
   })
 }
 
@@ -204,10 +209,20 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 
 // Show Post Controller
 function PostShowControllerFunction(PostFactory, $stateParams, $state) {
+
+  // Update post object against API
   this.post = PostFactory.get({ id: $stateParams.id })
+
+  // Update method sends PUT request to /api/posts/:id
   this.update = function() {
-    this.post.$update({id: $stateParams.id})
+    PostFactory.update({
+      id: this.post.id,
+      post: this.post
+    }).$promise.then( () => {
+      this.post = PostFactory.get({ id: $stateParams.id })
+    })
   }
+
   this.delete = function() {
     this.post.$delete({id: $stateParams.id})
     $state.go("postIndex", {}, { reload: false })

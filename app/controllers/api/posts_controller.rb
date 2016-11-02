@@ -4,7 +4,7 @@ class Api::PostsController < ApplicationController
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   # Set @post DRYness
-  before_action :set_post, only: [ :show, :edit, :update, :destroy, :add_favorite, :remove_favorite ]
+  before_action :set_post, only: [ :show, :update, :destroy, :add_favorite, :remove_favorite ]
 
   # Check JWT for valid user, (maybe add :new and :edit)
   before_action :authenticate_request!, only: [ :create, :update, :destroy, :add_favorite, :remove_favorite ]
@@ -30,8 +30,10 @@ class Api::PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
+    binding.pry
     # @post defined in before_action
     @post.update(post_params)
+    binding.pry
   end
 
   # DELETE /posts/1
@@ -70,6 +72,6 @@ class Api::PostsController < ApplicationController
     def post_params
       # params.require(:post).permit(:title, :link)
       # .require(:post) causing errors with API requests
-      params.permit(:id, :title, :link, :level, :desc_what, :desc_why, :desc_who, :user_id, :pub_date, :created_at, :updated_at)
+      params.require(:post).permit(:id, :title, :link, :level, :desc_what, :desc_why, :desc_who, :user_id, :pub_date, :created_at, :updated_at)
     end
 end
