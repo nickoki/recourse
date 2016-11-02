@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       member do
         post 'favorite' => "posts#add_favorite"
         delete 'favorite' => "posts#remove_favorite"
+        post 'vote' => "posts#vote"
       end
     end
   end

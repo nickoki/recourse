@@ -38,6 +38,12 @@ angular
     FavoriteFactoryFunction
   ])
 
+  // Declare factory for Votes
+  .factory("VoteFactory", [
+    "$resource",
+    VoteFactoryFunction
+  ])
+
   // Declare main controller for Recourse App
   .controller("RecourseController", [
     "TokenFactory",
@@ -56,6 +62,9 @@ angular
   // Declare controller for Post show
   .controller("PostShowController", [
     "PostFactory",
+    // do we want to allow favoriting on the show page
+    // "FavoriteFactory",
+    "VoteFactory",
     "$stateParams",
     "$state",
     PostShowControllerFunction
@@ -133,6 +142,24 @@ function FavoriteFactoryFunction($resource) {
     },
     delete: {
       method: "DELETE",
+      headers: { "Authorization": authToken }
+    }
+  })
+}
+
+function VoteFactoryFunction($resource) {
+
+  let authToken = ""
+  if (localStorage.getItem('recourseUser')) {
+    authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
+  }
+
+  // Route to API for ngResource
+  return $resource("/api/posts/:id/vote.json", {
+    id: '@id'
+  }, {
+    vote: {
+      method: "POST",
       headers: { "Authorization": authToken }
     }
   })
@@ -235,6 +262,15 @@ function PostShowControllerFunction(PostFactory, $stateParams, $state) {
       post: this.post
     }).$promise.then( () => {
       $state.go("postIndex", {}, { reload: false })
+    })
+  }
+
+  this.vote = function(type) {
+    VoteFactory.vote({
+      id: this.post.id,
+      vote: {
+        vote_type: type
+      }
     })
   }
 }

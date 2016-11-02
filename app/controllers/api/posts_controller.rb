@@ -4,7 +4,7 @@ class Api::PostsController < ApplicationController
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   # Set @post DRYness
-  before_action :set_post, only: [ :show, :update, :destroy, :add_favorite, :remove_favorite ]
+  before_action :set_post, only: [ :show, :update, :destroy, :add_favorite, :remove_favorite, :vote ]
 
   # Check JWT for valid user, (maybe add :new and :edit)
   before_action :authenticate_request!, only: [ :create, :update, :destroy, :add_favorite, :remove_favorite ]
@@ -59,6 +59,25 @@ class Api::PostsController < ApplicationController
 
 
 
+  # VOTES
+  # POST /posts/1/vote
+  def vote(vote_params)
+    # @post defined in before_action
+    @vote = @post.votes.find_by(user: current_user)
+    if !@vote
+      @vote = @post.votes.create({
+          user: current_user,
+          vote_type: vote_params[:vote_type]
+        })
+    elsif @vote[:vote_type] == vote_params[:vote_type]
+      @vote.destroy
+    else
+      @vote.update(vote_params)
+    end
+  end
+
+
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -69,5 +88,9 @@ class Api::PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:post).permit(:id, :title, :link, :level, :desc_what, :desc_why, :desc_who, :user_id, :pub_date, :created_at, :updated_at)
+    end
+
+    def vote_params
+      params.require(:vote).permit(:vote_type)
     end
 end
