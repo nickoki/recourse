@@ -42,6 +42,7 @@ angular
   .controller("RecourseController", [
     "TokenFactory",
     "DeviseFactory",
+    "$state",
     RecourseControllerFunction
   ])
 
@@ -138,7 +139,7 @@ function FavoriteFactoryFunction($resource) {
 }
 
 // Recourse Main Controller Function
-function RecourseControllerFunction(TokenFactory, DeviseFactory) {
+function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 
   if (localStorage.getItem('recourseUser')) {
     this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
@@ -161,6 +162,8 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory) {
     recourseUser.$save().then( () => {
       localStorage.setItem('recourseUser', JSON.stringify(recourseUser))
       this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
+      // $state.go("postIndex", {}, { reload: true })
+      location.reload() // jank af
     })
   }
 
