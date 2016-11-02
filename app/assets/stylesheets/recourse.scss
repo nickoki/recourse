@@ -20,7 +20,7 @@ $primary-brightness: 65%;
 // Define Colors
 $primary:         hsl($primary-hue, $primary-saturation, $primary-brightness);
 $primary-light:   lighten($primary, 20%);
-$primary-lighter: lighten($primary, 40%);
+$primary-lighter: lighten($primary, 30%);
 $primary-dark:    darken($primary, 20%);
 $primary-darker:  darken($primary, 40%);
 
@@ -63,6 +63,17 @@ a {
   }
 }
 
+a.button {
+  border: 1px solid $primary;
+  border-radius: 4px;
+  padding: 0.4em 0.6em;
+
+  &:hover {
+    border-color: $primary-dark;
+    background: $primary-lighter;
+  }
+}
+
 .upvote {
   color: $base-lighter;
 
@@ -98,8 +109,18 @@ a {
 
 
 // ====================
-// PANEL
+// POSTS
 // ====================
+
+h1 {
+  display: flex;
+  align-items: center;
+
+  .header-link {
+    margin-left: 1em;
+    font-size: 14pt;
+  }
+}
 
 .post-table {
 

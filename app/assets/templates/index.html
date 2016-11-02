@@ -12,7 +12,7 @@
 </div>
 
 <div class="col-md-9 col-md-pull-3">
-  <h1>Resources</h1>
+  <h1>Resources<span class="header-link"><a class="button" data-toggle="modal" data-target="#newPostModal">New</a></span></h1>
   <div class="post-table" data-ng-repeat="post in vm.posts | filter:vm.searchTerm | orderBy: 'created_at':true">
 
     <div class="post">
