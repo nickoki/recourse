@@ -35,7 +35,8 @@
             <li data-ng-if="!vm.currentUser"><a id="signInModalButton" href="/#/" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
             <li data-ng-if="!vm.currentUser"><a id="signUpModalButton" href="/#/" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
             <!-- <li ><a href="/#/" data-ng-click="vm.signOut()">Sign Out</a></li> -->
-            <li data-ng-if="vm.currentUser"><%= link_to 'Sign Out', destroy_user_session_path, method: :delete, "data-ng-click" => "vm.signOut()" %></li>
+            <li data-ng-if="vm.currentUser"><%= link_to 'Devise Sign Out', destroy_user_session_path, method: :delete, "data-ng-click" => "vm.signOut()" %></li>
+            <li data-ng-if="vm.currentUser"><a href="/#/" data-ng-click="vm.signOut()" >Sign Out</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
