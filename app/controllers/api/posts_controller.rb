@@ -4,7 +4,7 @@ class Api::PostsController < ApplicationController
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   # Set @post DRYness
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [ :show, :edit, :update, :destroy, :add_favorite, :remove_favorite ]
 
   # Check JWT for valid user, (maybe add :new and :edit)
   before_action :authenticate_request!, only: [ :create, :update, :destroy, :add_favorite, :remove_favorite ]
@@ -46,7 +46,6 @@ class Api::PostsController < ApplicationController
   # POST /posts/1/favorite
   def add_favorite
     # @post defined in before_action
-    @post = Post.find(post_params[:id])
     @favorite = @post.favorites.new(user: current_user)
     @favorite.save
   end
@@ -54,7 +53,6 @@ class Api::PostsController < ApplicationController
   # DELETE /posts/1/favorite
   def remove_favorite
     # @post defined in before_action
-    @post = Post.find(post_params[:id])
     @favorite = @post.favorites.find_by(user: current_user)
     @favorite.destroy
   end
