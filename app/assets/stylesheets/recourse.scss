@@ -13,14 +13,14 @@ $font: 'Lato', sans-serif;
 
 // Config Colors
 // tomato = hsl(9, 100%, 64%)
-$primary-hue:        9;
-$primary-saturation: 100%;
-$primary-brightness: 64%;
+$primary-hue:        220;
+$primary-saturation: 80%;
+$primary-brightness: 60%;
 
 // Base Colors
 $primary:       hsl($primary-hue, $primary-saturation, $primary-brightness);
 $primary-light: lighten($primary, 10%);
-$primary-dark:  darken($primary, 10%);
+$primary-dark:  darken($primary, 4%);
 
 
 
@@ -41,6 +41,10 @@ a {
 
   &:hover {
     color: $primary-light;
+  }
+
+  &:visited {
+    color: $primary-dark;
   }
 }
 
