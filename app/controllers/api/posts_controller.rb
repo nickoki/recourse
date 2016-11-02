@@ -1,14 +1,15 @@
 class Api::PostsController < ApplicationController
 
+  # Protect API from malicious sessions
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  # Set @post DRYness
+  before_action :set_post, only: [ :show, :update, :destroy, :add_favorite, :remove_favorite ]
 
-  before_action :authenticate_request!, only: [
-    # :new, :create,
-    #:edit, :update,
-    # :destroy
-  ]
+  # Check JWT for valid user, (maybe add :new and :edit)
+  before_action :authenticate_request!, only: [ :create, :update, :destroy, :add_favorite, :remove_favorite ]
+
+
 
   # GET /posts
   def index
@@ -18,82 +19,48 @@ class Api::PostsController < ApplicationController
 
   # GET /posts/1
   def show
-    @post = Post.find(params[:id])
-    # @favorites = @post.favorites
+    # @post defined in before_action
     render :json => @post.to_json(:include => [:favorites])
-    # respond_to do |format|
-    #   format.html { render :show }
-    #   format.json { render json: @post  }
-    # end
-
-  end
-
-  # GET /posts/new
-  def new
-    # relying on Angular Factories to handle all this biznas
-    # @post = Post.new
-  end
-
-  # GET /posts/1/edit
-  def edit
   end
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
-    # @post = Post.create! post_params
-    @post.save
-
-    # respond_to do |format|
-    #   if @post.save
-    #     format.html { redirect_to @post, notice: 'Post was successfully created.' }
-    #     format.json { render :show, status: :created, location: @post }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @post.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    @post = Post.create!(post_params.merge(user: current_user))
   end
 
   # PATCH/PUT /posts/1
   def update
-    @post = Post.find(post_params[:id])
+    # @post defined in before_action
     @post.update(post_params)
-    # respond_to do |format|
-    #   if @post.update(post_params)
-    #     format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-    #     format.json { render :show, status: :ok, location: @post }
-    #   else
-    #     format.html { render :edit }
-    #     format.json { render json: @post.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   # DELETE /posts/1
   def destroy
-    @post = Post.find(post_params[:id])
+    # @post defined in before_action
     @post.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-    #   format.json { head :no_content }
-    # end
   end
 
+
+
   # FAVORITES!
+  # POST /posts/1/favorite
   def add_favorite
-    @post = Post.find(post_params[:id])
-    @favorite = @post.favorites.new(user_id: 1)
+    # @post defined in before_action
+    @favorite = @post.favorites.new(user: current_user)
     @favorite.save
   end
 
+  # DELETE /posts/1/favorite
   def remove_favorite
-    @post = Post.find(post_params[:id])
-    @favorite = @post.favorites.find_by(user_id: 1)
+    # @post defined in before_action
+    @favorite = @post.favorites.find_by(user: current_user)
     @favorite.destroy
   end
 
+
+
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
@@ -101,8 +68,6 @@ class Api::PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      # params.require(:post).permit(:title, :link)
-      # .require(:post) causing errors with API requests
-      params.permit(:id, :title, :link, :level, :desc_what, :desc_why, :desc_who, :user_id, :pub_date, :created_at, :updated_at)
+      params.require(:post).permit(:id, :title, :link, :level, :desc_what, :desc_why, :desc_who, :user_id, :pub_date, :created_at, :updated_at)
     end
 end

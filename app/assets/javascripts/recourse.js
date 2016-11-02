@@ -42,6 +42,7 @@ angular
   .controller("RecourseController", [
     "TokenFactory",
     "DeviseFactory",
+    "$state",
     RecourseControllerFunction
   ])
 
@@ -90,32 +91,55 @@ function DeviseFactoryFunction($resource) {
 // Post Factory Function
 function PostFactoryFunction($resource) {
 
-  let authToken = "Bearer " + "";
+  let authToken = ""
+  if (localStorage.getItem('recourseUser')) {
+    authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
+  }
 
   // Route to API for ngResource
-  return $resource("/api/posts/:id.json", {}, {
+  return $resource("/api/posts/:id.json", {
+    id: '@id'
+  }, {
     create: {
       method: "POST",
-      headers: { "Authorization:": authToken }
+      headers: { "Authorization": authToken }
     },
-    update: { method: "PUT" }
+    update: {
+      method: "PUT",
+      headers: { "Authorization": authToken }
+    },
+    delete: {
+      method: "DELETE",
+      headers: { "Authorization": authToken }
+    }
   })
 }
 
 // Favorites Factory Function
 function FavoriteFactoryFunction($resource) {
 
+  let authToken = ""
+  if (localStorage.getItem('recourseUser')) {
+    authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
+  }
+
   // Route to API for ngResource
-  return $resource("/api/posts/:id/favorite", {
+  return $resource("/api/posts/:id/favorite.json", {
     id: '@id'
   }, {
-    create: { method: "POST" },
-    delete: { method: "DELETE" }
+    create: {
+      method: "POST",
+      headers: { "Authorization": authToken }
+    },
+    delete: {
+      method: "DELETE",
+      headers: { "Authorization": authToken }
+    }
   })
 }
 
 // Recourse Main Controller Function
-function RecourseControllerFunction(TokenFactory, DeviseFactory) {
+function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 
   if (localStorage.getItem('recourseUser')) {
     this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
@@ -123,9 +147,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory) {
 
   // Sign Up method sends POST request to /users/sign_up (Devise)
   this.signUp = function(user) {
-    console.log($('meta[name="csrf-token"]').attr('content'));
     let deviseUser = new DeviseFactory(user)
-    console.log(deviseUser);
     deviseUser.$save().then( () => {
       this.signIn(user)
     })
@@ -140,6 +162,8 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory) {
     recourseUser.$save().then( () => {
       localStorage.setItem('recourseUser', JSON.stringify(recourseUser))
       this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user.email
+      // $state.go("postIndex", {}, { reload: true })
+      location.reload() // jank af
     })
   }
 
@@ -159,44 +183,58 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
 
   // Create method sends POST request to /api/posts
   this.create = function(post) {
-    var newPost = new PostFactory({
+    PostFactory.create({
       title: post.title,
-      link: post.link,
-      user_id: 1 // hardcoded for now
-    })
-    newPost.$save().then( () => {
+      link: post.link
+    }).$promise.then( () => {
       // After save, re-query the API (avoids page refresh)
       this.posts = PostFactory.query()
     })
   }
 
-  // Add favorites
+  // Add Favorite method sends POST request to /api/posts/:id/favorite
   this.add_favorite = function(post) {
-    console.log(post);
-    let newFavorite = new FavoriteFactory({
+    FavoriteFactory.create({
       id: post.id
-    })
-    console.log(post.id);
-    newFavorite.$save().then( () => {
+    }).$promise.then( () => {
       this.posts = PostFactory.query()
     })
   }
 
-  // Remove favorite
+  // Remove Favorite method sends DELETE request to /api/posts/:id/favorite
   this.remove_favorite = function(post) {
-    FavoriteFactory.remove({id: post.id})
+    FavoriteFactory.delete({
+      id: post.id
+    }).$promise.then( () => {
+      this.posts = PostFactory.query()
+    })
   }
 }
 
 // Show Post Controller
 function PostShowControllerFunction(PostFactory, $stateParams, $state) {
+
+  // Update post object against API
   this.post = PostFactory.get({ id: $stateParams.id })
+
+  // Update method sends PUT request to /api/posts/:id
   this.update = function() {
-    this.post.$update({id: $stateParams.id})
+    PostFactory.update({
+      id: this.post.id,
+      post: this.post
+    }).$promise.then( () => {
+      this.post = PostFactory.get({ id: $stateParams.id })
+    })
   }
+
+  // Delete method sends DELETE request to /api/posts/:id
   this.delete = function() {
-    this.post.$delete({id: $stateParams.id})
-    $state.go("postIndex", {}, { reload: false })
+    PostFactory.delete({
+      id: this.post.id,
+      post: this.post
+    }).$promise.then( () => {
+      $state.go("postIndex", {}, { reload: false })
+    })
   }
 }
 
