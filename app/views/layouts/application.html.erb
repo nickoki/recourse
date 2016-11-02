@@ -10,6 +10,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular-resource.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
 
   </head>
 
@@ -34,9 +35,7 @@
             <li><a href="/#/">Home</a></li>
             <li data-ng-if="!vm.currentUser"><a id="signInModalButton" href="/#/" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
             <li data-ng-if="!vm.currentUser"><a id="signUpModalButton" href="/#/" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
-            <!-- <li ><a href="/#/" data-ng-click="vm.signOut()">Sign Out</a></li> -->
-            <li data-ng-if="vm.currentUser"><%= link_to 'Devise Sign Out', destroy_user_session_path, method: :delete, "data-ng-click" => "vm.signOut()" %></li>
-            <li data-ng-if="vm.currentUser"><a href="/#/" data-ng-click="vm.signOut()" >Sign Out</a></li>
+            <li data-ng-if="vm.currentUser"><a href="/#/" data-ng-click="vm.signOut()" >Sign Out {{vm.currentUser.email}}</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -49,16 +48,7 @@
     <% end %>
 
     <div class="container">
-      <div class="col-md-8">
-        <ui-view></ui-view>
-      </div>
-      <div class="col-md-4">
-        <div class="panel panel-default" data-ng-if="vm.currentUser">
-          <div class="panel-body">
-            <h3>Hello, {{ vm.currentUser}}.</h3>
-          </div>
-        </div>
-      </div>
+      <ui-view></ui-view>
     </div>
 
     <div id="signInModal" class="modal fade" tabindex="-1" role="dialog">
