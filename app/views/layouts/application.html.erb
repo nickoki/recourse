@@ -47,16 +47,7 @@
     <% end %>
 
     <div class="container">
-      <div class="col-md-8">
-        <ui-view></ui-view>
-      </div>
-      <div class="col-md-4">
-        <div class="panel panel-default" data-ng-if="vm.currentUser">
-          <div class="panel-body">
-            <h3>Hello, {{ vm.currentUser}}.</h3>
-          </div>
-        </div>
-      </div>
+      <ui-view></ui-view>
     </div>
 
     <div id="signInModal" class="modal fade" tabindex="-1" role="dialog">
