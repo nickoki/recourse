@@ -118,7 +118,7 @@ function FavoriteFactoryFunction($resource) {
   return $resource("/api/posts/:id/favorite.json", {
     id: '@id'
   }, {
-    create: {
+    add_favorite: {
       method: "POST",
       headers: { "Authorization": authToken }
     },
@@ -180,17 +180,25 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
     })
   }
 
-  // Add favorites
+  // Add Favorite method sends POST request to /api/posts/:id/favorite
   this.add_favorite = function(post) {
-    console.log(post);
-    let newFavorite = new FavoriteFactory({
+    FavoriteFactory.create({
       id: post.id
-    })
-    console.log(post.id);
-    newFavorite.$save().then( () => {
+    }).$promise.then( () => {
       this.posts = PostFactory.query()
     })
   }
+
+  // this.add_favorite = function(post) {
+  //   console.log(post);
+  //   let newFavorite = new FavoriteFactory({
+  //     id: post.id
+  //   })
+  //   console.log(post.id);
+  //   newFavorite.$save().then( () => {
+  //     this.posts = PostFactory.query()
+  //   })
+  // }
 
   // Remove favorite
   this.remove_favorite = function(post) {
