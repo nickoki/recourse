@@ -4,7 +4,8 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><a data-ui-sref="postShow({id: post.id})">{{post.title}}</a></h3>
-        <a data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+        <a data-ng-if="!vm.check_favorites(post) && vm.currentUser" data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+        <a data-ng-if="vm.check_favorites(post) && vm.currentUser" data-ng-click="vm.remove_favorite(post)"><i class="fa fa-star" aria-hidden="true"></i></a>
       </div>
       <div class="panel-body">
         <span am-time-ago="post.created_at | amParse:'YYYY.MM.DD HH:mm:ss'"></span>

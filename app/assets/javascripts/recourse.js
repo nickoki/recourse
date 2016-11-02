@@ -203,7 +203,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory) {
   // Check favorites method checks if currentUser has favorited a post
   this.check_favorites = function(post) {
     return post.favorites.some( fav => {
-      return fav.user_id == this.currentUser.id
+      return this.currentUser ? fav.user_id == this.currentUser.id : false
     })
   }
 
