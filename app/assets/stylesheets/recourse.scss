@@ -1,3 +1,39 @@
+// app/assets/stylesheets/recourse.scss
+
+// ====================
+// GLOBAL VARIABLES
+// ====================
+
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+
+$font: 'Lato', sans-serif;
+
+$purple: #6441A5;
+$light-purple: #9D50BB;
+$gradient-purple: linear-gradient(to left, #9D50BB , #6441A5);
+
+
+// Config Colors
+$tomato-hue:        9;
+$tomato-saturation: 100%;
+$tomato-brightness: 64%;
+
+// Base Colors
+$tomato:       hsl($tomato-hue, $tomato-saturation, $tomato-brightness);
+$tomato-light: lighten($tomato, 10%);
+$tomato-dark:  darken($tomato, 10%);
+
+// ====================
+// MAIN
+// ====================
+
 a {
-  color: tomato;
+  text-decoration: none !important;
+  color: $tomato;
+  cursor: pointer;
+  transition: 0.4s;
+
+  &:hover {
+    color: $tomato-light;
+  }
 }
