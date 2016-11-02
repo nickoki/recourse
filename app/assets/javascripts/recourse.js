@@ -90,13 +90,13 @@ function DeviseFactoryFunction($resource) {
 // Post Factory Function
 function PostFactoryFunction($resource) {
 
-  let authToken = "Bearer " + "";
+  let authToken = "Bearer " + JSON.parse(localStorage.getItem('recourseUser')).auth_token
 
   // Route to API for ngResource
   return $resource("/api/posts/:id.json", {}, {
     create: {
       method: "POST",
-      headers: { "Authorization:": authToken }
+      headers: { "Authorization": authToken }
     },
     update: { method: "PUT" }
   })
