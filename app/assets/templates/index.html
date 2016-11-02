@@ -12,6 +12,7 @@
 </div>
 
 <div class="col-md-9 col-md-pull-3">
+  <h1>Resources</h1>
   <div class="post-table" data-ng-repeat="post in vm.posts | filter:vm.searchTerm | orderBy: 'created_at':true">
 
     <div class="post">
@@ -25,8 +26,12 @@
           <a data-ng-if="!vm.check_favorites(post) && vm.currentUser" data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a>
           <a data-ng-if="vm.check_favorites(post) && vm.currentUser" data-ng-click="vm.remove_favorite(post)"><i class="fa fa-star" aria-hidden="true"></i></a>
         </div>
+        <div class="stats">
+          <span><em>submitted at {{post.created_at}} by {{post.user.email}}</em></span>
+        </div>
         <div class="body">
-          <span am-time-ago="post.created_at | amParse:'YYYY.MM.DD HH:mm:ss'"></span>
+          <span>{{post.desc_what}}</span>
+          <span am-time-ago="post.created_at | amUtcParse:'YYYY.MM.DD HH:mm:ss'"></span>
           <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
         </div>
       </div>

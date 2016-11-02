@@ -19,16 +19,16 @@ $primary-brightness: 65%;
 
 // Define Colors
 $primary:         hsl($primary-hue, $primary-saturation, $primary-brightness);
-$primary-light:   lighten($primary, 10%);
-$primary-lighter: lighten($primary, 20%);
-$primary-dark:    darken($primary, 10%);
-$primary-darker:  darken($primary, 25%);
+$primary-light:   lighten($primary, 20%);
+$primary-lighter: lighten($primary, 40%);
+$primary-dark:    darken($primary, 20%);
+$primary-darker:  darken($primary, 40%);
 
-$base:         hsl(0, 0%, 20%);
-$base-light:   lighten($base, 10%);
-$base-lighter: lighten($base, 20%);
-$base-dark:    darken($base, 10%);
-$base-darker:  darken($base, 25%);
+$base:         hsl(0, 0%, 30%);
+$base-light:   lighten($base, 20%);
+$base-lighter: lighten($base, 40%);
+$base-dark:    darken($base, 20%);
+$base-darker:  darken($base, 40%);
 
 
 
@@ -48,7 +48,7 @@ a {
   text-decoration: none !important;
   color: $primary;
   cursor: pointer;
-  transition: 0.4s;
+  transition: 0.2s;
 
   &:hover {
     color: $primary-dark;
@@ -113,11 +113,23 @@ a {
     border-bottom: 1px solid $base-lighter;
     padding: 0.6em 0;
 
+    &:hover {
+      background: #fafafa;
+    }
+
     .votes {
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 0 0.8em;
+
+      .upvote {
+        margin-bottom: 0.4em;
+      }
+
+      i {
+        font-size: 1.4em;
+      }
     }
 
     .content {
@@ -127,12 +139,17 @@ a {
       .heading {
         display: flex;
         justify-content: space-between;
-        padding-bottom: 0.4em;
+        padding-bottom: 0.3em;
 
         .title {
           font-size: 1.3em;
           font-weight: 700;
         }
+      }
+
+      .stats {
+        padding-bottom: 0.3em;
+        color: $base-lighter;
       }
 
       .body {
