@@ -31,7 +31,6 @@
         </div>
         <div class="body">
           <span>{{post.desc_what}}</span>
-          <span am-time-ago="post.created_at | amUtcParse:'YYYY.MM.DD HH:mm:ss'"></span>
           <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
         </div>
       </div>
@@ -50,12 +49,32 @@
         <h4 class="modal-title">New Post</h4>
       </div>
       <div class="modal-body">
-        <form method="POST">
-          <input placeholder="Title" type="text" data-ng-model="post.title" />
-          <input placeholder="Link" type="text" data-ng-model="post.link" />
-        </form>
+        <div class="form">
+          <form method="POST">
+            <div class="field">
+              <label>Title</label><br>
+              <input placeholder="Placeholder text for dummies" type="text" data-ng-model="post.title" />
+            </div>
+            <div class="field">
+              <label>Link</label><br>
+              <input placeholder="http://www.dumdum.com/placeholders" type="text" data-ng-model="post.link" />
+            </div>
+            <div class="field">
+              <label>What does this resource cover?</label><br>
+              <input placeholder="This article is an expansive guide to placeholder best practices and jokes." type="text-area" data-ng-model="post.desc_what" />
+            </div>
+            <div class="field">
+              <label>What makes this a great resource?</label><br>
+              <input placeholder="It's well organized and concise!" type="text-area" data-ng-model="post.desc_why" />
+            </div>
+            <div class="field">
+              <label>Who is the ideal audience for this resource?</label><br>
+              <input placeholder="Anyone that needs a confidence boost about the jokes they include in their examples." type="text-area" data-ng-model="post.desc_who" />
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer actions">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="vm.create(post)">Submit</button>
       </div>
