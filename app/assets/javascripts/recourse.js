@@ -102,7 +102,7 @@ angular
 function TokenFactoryFunction($resource) {
 
   // Route to authentications controller for ngResource
-  return $resource("/auth_user", {}, {
+  return $resource("https://recourse.herokuapp.com/auth_user", {}, {
     signIn: {
       method: "POST"
     }
