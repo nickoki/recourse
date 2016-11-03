@@ -43342,7 +43342,7 @@ $provide.value("$locale", {
 //
 // angular_templates.ignore_prefix: ["templates/"]
 // angular_templates.markups: ["erb", "str"]
-// angular_templates.htmlcompressor: 
+// angular_templates.htmlcompressor:
 
 angular.module("templates", []);
 
@@ -43976,8 +43976,7 @@ angular
   .module("recourse", [
     "ui.router",
     "templates",
-    "ngResource",
-    "angularMoment"
+    "ngResource"
   ])
 
   // Congifure router function
