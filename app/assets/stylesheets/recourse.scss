@@ -287,8 +287,9 @@ form {
   flex-direction: column;
   width: 100%;
 
-  label {
-    display: block;
+  .field {
+    display: flex;
+    flex-direction: column;
   }
 
   input,
@@ -305,6 +306,8 @@ form {
   }
 
   input[type="checkbox"] {
+    position: relative !important;
+    margin: 0 !important;
     margin-right: 0.4em;
   }
 
