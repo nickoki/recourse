@@ -2,17 +2,17 @@
   <div class="well well-sm">
     <form>
       <h4>Search</h4>
-      <input id="search-box"type="text" data-ng-model="vm.searchTerm">
+      <input id="search-box" type="text" data-ng-model="vm.searchTerm">
       <h4>Filter</h4>
-      <label><input type="checkbox" />My Favorites</label>
-      <label><input type="checkbox" />My Posts</label>
+      <label><input type="checkbox" data-ng-model="vm.filters.favorites"/>My Favorites</label>
+      <label><input type="checkbox" data-ng-model="vm.filters.myPosts"/>My Posts</label>
     </form>
   </div>
 </div>
 
 <div class="col-md-9 col-md-pull-3">
   <h1>Resources<span class="header-link"><a class="button" data-toggle="modal" data-target="#newPostModal">New</a></span></h1>
-  <div class="post-table" data-ng-repeat="post in vm.posts | filter:vm.searchTerm | orderBy: 'created_at':true">
+  <div class="post-table" data-ng-repeat="post in vm.posts | myPosts:vm | myFavorites:vm | filter:vm.searchTerm | orderBy: 'created_at':true">
 
     <div class="post">
       <div class="votes">

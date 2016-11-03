@@ -12,12 +12,12 @@ class Auth
   # Method to issue tokens
   def self.issue(payload)
     # Use encode method (from jwt gem) to generate a token
-    JWT.encode(payload, Rails.application.secrets.secret_key_base, ALGORITHM)
+    JWT.encode(payload, ENV["super_secret_info"], ALGORITHM)
   end
 
   # Method to decode tokens
   def self.decode(token)
     # Use decode method (from jwt gem) to interpret a token
-    JWT.decode(token, Rails.application.secrets.secret_key_base, true, { algorithm: ALGORITHM }).first
+    JWT.decode(token, ENV["super_secret_info"], true, { algorithm: ALGORITHM }).first
   end
 end

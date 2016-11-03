@@ -71,6 +71,32 @@ angular
     PostShowControllerFunction
   ])
 
+  // filter by current user's posts
+  .filter('myPosts', function () {
+    return function (posts, vm) {
+      return posts.filter(function (post) {
+        if (vm.filters.myPosts && vm.currentUser ) {
+          return post.user_id == vm.currentUser.id
+        } else {
+          return true
+        }
+      });
+    };
+  })
+
+  // filter by favorited posts
+  .filter('myFavorites', function () {
+    return function (posts, vm) {
+      return posts.filter(function (post) {
+        if (vm.filters.favorites) {
+          return !!vm.check_favorites(post)
+        } else {
+          return true
+        }
+      });
+    };
+  });
+
 
 
 // User Factory Function
@@ -83,6 +109,8 @@ function TokenFactoryFunction($resource) {
     }
   })
 }
+
+
 
 // Devise Factory Function
 function DeviseFactoryFunction($resource) {
@@ -97,6 +125,8 @@ function DeviseFactoryFunction($resource) {
     }
   })
 }
+
+
 
 // Post Factory Function
 function PostFactoryFunction($resource) {
@@ -125,6 +155,8 @@ function PostFactoryFunction($resource) {
   })
 }
 
+
+
 // Favorites Factory Function
 function FavoriteFactoryFunction($resource) {
 
@@ -148,6 +180,8 @@ function FavoriteFactoryFunction($resource) {
   })
 }
 
+
+
 function VoteFactoryFunction($resource) {
 
   let authToken = ""
@@ -165,6 +199,8 @@ function VoteFactoryFunction($resource) {
     }
   })
 }
+
+
 
 // Recourse Main Controller Function
 function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
@@ -205,11 +241,18 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 }
 
 
+
 // Index Post Controller Function
 function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
+
+  // bound to the filter checkboxes. Will turn true if filter is on
+  this.filters = {
+    favorites: false,
+    myPosts: false
+  }
 
   // Set front-end currentUser
   if (localStorage.getItem('recourseUser')) {
@@ -252,6 +295,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
     })
   }
 
+  // Vote method sends POST request to /api/posts/:id/vote
   this.vote = function(post, type) {
     VoteFactory.vote({
       id: post.id,
@@ -262,6 +306,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
       this.posts = PostFactory.query()
     })
   }
+}
 
   // Count votes
   this.count_votes = function(post) {
@@ -279,7 +324,6 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
   }
 
   this.get_user_vote_type = function(post) {
-    console.log("YO");
     for (i = 0; i <post.votes.length; i++) {
       if (post.votes[i].user_id == this.currentUser.id) {
         return post.votes[i].vote_type
@@ -332,6 +376,7 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
     })
   }
 
+  // Vote method sends POST request to /api/posts/:id/vote
   this.vote = function(type) {
     VoteFactory.vote({
       id: this.post.id,

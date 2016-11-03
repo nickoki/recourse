@@ -31,13 +31,29 @@ class Api::PostsController < ApplicationController
   # PATCH/PUT /posts/1
   def update
     # @post defined in before_action
-    @post.update(post_params)
+    puts "update called"
+    if !belongs_to_current_user?(@post)
+      puts "if true"
+      # flash[:alert] = "You may only edit a post you created."
+      # redirect_to root
+      return
+    else
+      puts "if false"
+      @post.update(post_params)
+    end
+    puts "final line"
   end
 
   # DELETE /posts/1
   def destroy
     # @post defined in before_action
-    @post.destroy
+    if !belongs_to_current_user?(@post)
+      # flash[:alert] = "You may only delete a post you created."
+      # redirect_to root
+      return
+    else
+      @post.destroy
+    end
   end
 
 
@@ -65,16 +81,13 @@ class Api::PostsController < ApplicationController
     # @post defined in before_action
     @vote = @post.votes.find_by(user: current_user)
     if !@vote
-      puts "create vote"
       @vote = @post.votes.create({
           user: current_user,
           vote_type: vote_params[:vote_type]
         })
     elsif @vote[:vote_type] == vote_params[:vote_type]
-      puts "destroy vote"
       @vote.destroy
     else
-      puts "update vote"
       @vote.update(vote_params)
     end
   end
@@ -86,6 +99,12 @@ class Api::PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+
+    def belongs_to_current_user?(object)
+      puts "belongs_to_current_user is about to return: "
+      puts object[:user_id] == current_user[:id]
+      return object[:user_id] == current_user[:id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
