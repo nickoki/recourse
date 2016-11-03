@@ -66,11 +66,23 @@ a {
 a.button {
   border: 1px solid $primary;
   border-radius: 4px;
+  margin: 0 0.4em;
   padding: 0.4em 0.6em;
 
   &:hover {
     border-color: $primary-dark;
     background: $primary-lighter;
+  }
+}
+
+a.button.cancel {
+  border: 1px solid $base-light;
+  color: $base-light;
+
+  &:hover {
+    border-color: $base;
+    background: #fafafa;
+    color: $base;
   }
 }
 
@@ -262,13 +274,19 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
+  width: 100%;
+
+  label {
+    display: block;
+  }
 
   input,
   textarea {
-    margin: 1em 0;
+    margin-bottom: 1em;
     border: 1px solid $base-light;
     border-radius: 3px;
-    padding: 1em;
+    padding: 0.4em 0.6em;
+    width: 100%;
   }
 
   textarea {
