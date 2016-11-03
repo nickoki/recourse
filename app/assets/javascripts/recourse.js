@@ -367,8 +367,8 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
   }
 
   // Check favorites method checks if currentUser has favorited a post
-  this.check_favorites = function(post) {
-    return post.favorites.some( fav => {
+  this.check_favorites = function() {
+    return this.post.favorites.some( fav => {
       return this.currentUser ? fav.user_id == this.currentUser.id : false
     })
   }
@@ -404,27 +404,28 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
   }
 
   // Count votes
-  this.count_votes = function(post) {
+  this.count_votes = function() {
     let upvotes = 0
     let downvotes = 0
 
-    for (let i = 0; i < post.votes.length; i++) {
-      if (post.votes[i].vote_type == "up") {
+    for (let i = 0; i < this.post.votes.length; i++) {
+      if (this.post.votes[i].vote_type == "up") {
         upvotes++
-      } else if (post.votes[i].vote_type == "down") {
+      } else if (this.post.votes[i].vote_type == "down") {
         downvotes++
       }
     }
     return (upvotes - downvotes)
   }
 
-  this.get_user_vote_type = function(post) {
+  this.get_user_vote_type = function() {
     if (!this.currentUser) {
       return
     } else {
-      for (i = 0; i < post.votes.length; i++) {
-        if (post.votes[i].user_id == this.currentUser.id) {
-          return post.votes[i].vote_type
+      console.log(this.post);
+      for (let i = 0; i < this.post.votes.length; i++) {
+        if (this.post.votes[i].user_id == this.currentUser.id) {
+          return this.post.votes[i].vote_type
         }
       }
     }
