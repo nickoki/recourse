@@ -5,8 +5,8 @@
     <title>Recourse</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular-resource.min.js"></script>
@@ -37,7 +37,7 @@
             <li><a href="/#/">Home</a></li>
             <li data-ng-if="!vm.currentUser"><a id="signInModalButton" href="/#/" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
             <li data-ng-if="!vm.currentUser"><a id="signUpModalButton" href="/#/" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
-            <li data-ng-if="vm.currentUser"><a href="/#/" data-ng-click="vm.signOut()" >Sign Out {{vm.currentUser.email}}</a></li>
+            <li data-ng-if="vm.currentUser"><a href="/#/" data-ng-click="vm.signOut()" >Sign Out ({{vm.currentUser.email}})</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

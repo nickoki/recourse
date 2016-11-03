@@ -23,5 +23,4 @@ Rails.application.routes.draw do
   # Route to authenticate user and assign JWT
   post 'auth_user' => 'authentications#authenticate_user'
 
-  # Route
 end

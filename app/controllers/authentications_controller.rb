@@ -1,5 +1,8 @@
 # app/controllers/authentications_controller.rb
 
+# Config Rails to autoload lib/auth.rb
+require_relative "#{Rails.root}/lib/auth.rb"
+
 class AuthenticationsController < ApplicationController
 
   # Method to authenticate user
