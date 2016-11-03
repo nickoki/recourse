@@ -4,8 +4,10 @@
       <h4>Search</h4>
       <input id="search-box" type="text" data-ng-model="vm.searchTerm">
       <h4 data-ng-show="vm.currentUser">Filter</h4>
-      <label data-ng-show="vm.currentUser"><input type="checkbox" data-ng-model="vm.filters.favorites"/>My Favorites</label>
-      <label data-ng-show="vm.currentUser"><input type="checkbox" data-ng-model="vm.filters.myPosts"/>My Posts</label>
+      <div class="field">
+        <label class="checkbox" data-ng-show="vm.currentUser"><input type="checkbox" data-ng-model="vm.filters.favorites"/>My Favorites</label>
+        <label class="checkbox" data-ng-show="vm.currentUser"><span><input type="checkbox" data-ng-model="vm.filters.myPosts"/>My Posts</span></label>
+      </div>
     </form>
   </div>
 </div>
@@ -53,7 +55,7 @@
       </div>
       <div class="modal-body">
         <div class="form">
-          <form method="POST">
+          <form>
             <div class="field">
               <label>Title</label>
               <input placeholder="Placeholder text for dummies" type="text" data-ng-model="post.title" />

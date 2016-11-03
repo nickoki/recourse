@@ -86,6 +86,17 @@ a.button.cancel {
   }
 }
 
+a.button.delete {
+  border: 1px solid lighten(#DA4453, 10%);
+  color: lighten(#DA4453, 10%);
+
+  &:hover {
+    border-color: #DA4453;
+    background: lighten(#DA4453, 40%);
+    color: #DA4453;
+  }
+}
+
 .external-link {
   display: inline-block;
 }
@@ -276,8 +287,9 @@ form {
   flex-direction: column;
   width: 100%;
 
-  label {
-    display: block;
+  .field {
+    display: flex;
+    flex-direction: column;
   }
 
   input,
@@ -294,6 +306,8 @@ form {
   }
 
   input[type="checkbox"] {
+    position: relative !important;
+    margin: 0 !important;
     margin-right: 0.4em;
   }
 

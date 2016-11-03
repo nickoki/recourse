@@ -11,7 +11,6 @@
         <span class="header-link">
           <a data-ng-if="!vm.check_favorites() && vm.currentUser" data-ng-click="vm.add_favorite()"><i class="fa fa-star-o" aria-hidden="true"></i></a>
           <a data-ng-if="vm.check_favorites() && vm.currentUser" data-ng-click="vm.remove_favorite()"><i class="fa fa-star" aria-hidden="true"></i></a>
-          <button data-ng-show="vm.currentUser.id == vm.post.user_id" type="button" data-ng-click="vm.delete()">DELETE!</button>
           <a data-ng-show="vm.currentUser.id == vm.post.user_id" class="button" data-toggle="modal" data-target="#editPostModal">Edit Post</a>
         </span>
       </div>
@@ -48,33 +47,31 @@
           <form>
             <div class="field">
               <label>Title</label>
-              <input type="text" id="edit-title" data-ng-model="vm.post.title">
+              <input type="text" data-ng-model="vm.post.title">
             </div>
             <div class="field">
               <label for="edit-link">Link</label>
-              <input type="text" id="edit-link" data-ng-model="vm.post.link">
+              <input type="text" data-ng-model="vm.post.link">
             </div>
             <div class="field">
               <label for="edit-desc-what">What does this resource cover?</label>
-              <textarea type="text" id="edit-desc-what" data-ng-model="vm.post.desc_what"></textarea>
+              <textarea type="text" data-ng-model="vm.post.desc_what"></textarea>
             </div>
             <div class="field">
               <label for="edit-desc-why">What makes this a great resource?</label>
-              <textarea type="text" id="edit-desc-why" data-ng-model="vm.post.desc_why"></textarea>
+              <textarea type="text" data-ng-model="vm.post.desc_why"></textarea>
             </div>
             <div class="field">
               <label for="edit-desc-who">Who is the ideal audience for this resource?</label>
-              <textarea type="text" id="edit-desc-who" data-ng-model="vm.post.desc_who"></textarea>
-            </div>
-            <div class="field">
-              <button data-ng-show="vm.currentUser.id == vm.post.user_id">Save</button>
+              <textarea type="text" data-ng-model="vm.post.desc_who"></textarea>
             </div>
           </form>
         </div>
       </div>
       <div class="modal-footer actions">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="vm.update()">Save Edits</button>
+        <a class="button cancel" data-dismiss="modal">Cancel</a>
+        <a class="button delete" data-dismiss="modal" data-ng-show="vm.currentUser.id == vm.post.user_id" data-ng-click="vm.delete()">Delete Post</a>
+        <a class="button" data-dismiss="modal" data-ng-click="vm.update()">Save Edits</a>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
