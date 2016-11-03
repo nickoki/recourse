@@ -326,7 +326,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
     if (!this.currentUser) {
       return
     } else {
-      for (i = 0; i < post.votes.length; i++) {
+      for (let i = 0; i < post.votes.length; i++) {
         if (post.votes[i].user_id == this.currentUser.id) {
           return post.votes[i].vote_type
         }
@@ -422,7 +422,6 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
     if (!this.currentUser) {
       return
     } else {
-      console.log(this.post);
       for (let i = 0; i < this.post.votes.length; i++) {
         if (this.post.votes[i].user_id == this.currentUser.id) {
           return this.post.votes[i].vote_type
