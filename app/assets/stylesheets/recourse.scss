@@ -80,13 +80,13 @@ a.button {
   &:hover {
     color: lighten(#8CC152, 10%);
   }
+}
 
-  .active {
-    color: #8CC152;
+.upvote.active {
+  color: #8CC152 !important;
 
-    &:hover {
-      color: $base-lighter;
-    }
+  &:hover {
+    color: $base-lighter;
   }
 }
 
@@ -96,13 +96,13 @@ a.button {
   &:hover {
     color: lighten(#DA4453, 10%);
   }
+}
 
-  .active {
-    color: #DA4453;
+.downvote.active {
+  color: #DA4453;
 
-    &:hover {
-      color: $base-lighter;
-    }
+  &:hover {
+    color: $base-lighter;
   }
 }
 
