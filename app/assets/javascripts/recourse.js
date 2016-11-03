@@ -102,7 +102,7 @@ angular
 function TokenFactoryFunction($resource) {
 
   // Route to authentications controller for ngResource
-  return $resource("https://recourse.herokuapp.com/auth_user", {}, {
+  return $resource("/auth_user", {}, {
     signIn: {
       method: "POST"
     }
@@ -308,21 +308,17 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
 
   // Count votes
   this.count_votes = function(post) {
-    if (!this.currentUser) {
-      return
-    } else {
-      let upvotes = 0
-      let downvotes = 0
+    let upvotes = 0
+    let downvotes = 0
 
-      for (let i = 0; i < post.votes.length; i++) {
-        if (post.votes[i].vote_type == "up") {
-          upvotes++
-        } else if (post.votes[i].vote_type == "down") {
-          downvotes++
-        }
+    for (let i = 0; i < post.votes.length; i++) {
+      if (post.votes[i].vote_type == "up") {
+        upvotes++
+      } else if (post.votes[i].vote_type == "down") {
+        downvotes++
       }
-      return (upvotes - downvotes)
     }
+    return (upvotes - downvotes)
   }
 
   this.get_user_vote_type = function(post) {
