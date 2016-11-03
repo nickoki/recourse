@@ -263,7 +263,10 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
   this.create = function(post) {
     PostFactory.create({
       title: post.title,
-      link: post.link
+      link: post.link,
+      desc_what: post.desc_what,
+      desc_why: post.desc_why,
+      desc_who: post.desc_who
     }).$promise.then( () => {
       // After save, re-query the API (avoids page refresh)
       this.posts = PostFactory.query()
