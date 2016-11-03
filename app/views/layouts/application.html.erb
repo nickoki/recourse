@@ -44,12 +44,6 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-    <% flash.each do |type, message| %>
-      <div class="alert <%= bootstrap_class_for(type) %> fade in">
-        <%= message %>
-      </div>
-    <% end %>
-
     <div class="container">
       <ui-view></ui-view>
     </div>

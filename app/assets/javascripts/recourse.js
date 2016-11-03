@@ -233,7 +233,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
     })
   }
 
-  // Sign Up method removes JWT from localStorage
+  // Sign Out method removes JWT from localStorage
   this.signOut = function() {
     localStorage.removeItem('recourseUser')
     this.currentUser = ""

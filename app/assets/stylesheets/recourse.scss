@@ -281,7 +281,6 @@ h1 {
 // FORMS
 // ====================
 
-
 form {
   display: flex;
   flex-direction: column;
@@ -325,6 +324,28 @@ form {
     &:hover {
       background: #fafafa;
       transition: 0.6s;
+    }
+  }
+}
+
+
+
+// ====================
+// ASIDE
+// ====================
+
+.aside {
+  .links {
+    li {
+      list-style: none;
+
+      a {
+        color: $base-lighter;
+
+        &:hover {
+          color: $base-light;
+        }
+      }
     }
   }
 }
