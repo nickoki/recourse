@@ -112,20 +112,31 @@ a.button {
 // POSTS INDEX
 // ====================
 
+.index-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6em;
+  width: 100%;
+}
+
 h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 !important;
   width: 100%;
+}
 
-  .header-link {
+.header-link {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: 1em;
+  min-width: 180px;
+  font-size: 14pt;
+
+  .button {
     margin-left: 1em;
-    font-size: 14pt;
-
-    .button {
-      margin-left: 1em;
-    }
   }
 }
 
@@ -202,6 +213,26 @@ h1 {
 .post-show {
   display: flex;
 
+  .votes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.6em;
+    padding: 0 0.8em;
+    height: 100%;
+
+    .score {
+      margin: 0.1em 0;
+      font-size: 1em;
+      color: $base-lighter;
+    }
+
+    i {
+      font-size: 1.4em;
+    }
+  }
+
   .post {
     display: flex;
     flex-direction: column;
@@ -210,27 +241,9 @@ h1 {
     .heading {
       display: flex;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-start;
+      margin-bottom: 0.6em;
       width: 100%;
-
-      .votes {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0 0.8em;
-        height: 100%;
-
-        .score {
-          margin: 0.1em 0;
-          font-size: 1em;
-          color: $base-lighter;
-        }
-
-        i {
-          font-size: 1.4em;
-        }
-      }
     }
   }
 }
