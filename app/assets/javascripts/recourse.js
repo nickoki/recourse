@@ -366,6 +366,13 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
     })
   }
 
+  // Check favorites method checks if currentUser has favorited a post
+  this.check_favorites = function(post) {
+    return post.favorites.some( fav => {
+      return this.currentUser ? fav.user_id == this.currentUser.id : false
+    })
+  }
+
   // Add Favorite method sends POST request to /api/posts/:id/favorite
   this.add_favorite = function() {
     FavoriteFactory.create({
@@ -394,6 +401,33 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
     }).$promise.then( () => {
       this.post = PostFactory.get({ id: $stateParams.id })
     })
+  }
+
+  // Count votes
+  this.count_votes = function(post) {
+    let upvotes = 0
+    let downvotes = 0
+
+    for (let i = 0; i < post.votes.length; i++) {
+      if (post.votes[i].vote_type == "up") {
+        upvotes++
+      } else if (post.votes[i].vote_type == "down") {
+        downvotes++
+      }
+    }
+    return (upvotes - downvotes)
+  }
+
+  this.get_user_vote_type = function(post) {
+    if (!this.currentUser) {
+      return
+    } else {
+      for (i = 0; i < post.votes.length; i++) {
+        if (post.votes[i].user_id == this.currentUser.id) {
+          return post.votes[i].vote_type
+        }
+      }
+    }
   }
 }
 
