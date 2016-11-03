@@ -1,9 +1,9 @@
 <div class="col-md-12">
   <div class="post-show">
     <div class="votes">
-      <a class="upvote" data-ng-class="(vm.get_user_vote_type(vm.post) == 'up') ? 'active' : ''" data-ng-click="vm.vote(vm.post, 'up')"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+      <a class="upvote" data-ng-class="(vm.get_user_vote_type(vm.post) == 'up') ? 'active' : ''" data-ng-click="vm.vote('up')"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
       <span class="score">{{vm.count_votes(vm.post)}}</span>
-      <a class="downvote" data-ng-class="(vm.get_user_vote_type(vm.post) == 'down') ? 'active' : ''" data-ng-click="vm.vote(vm.post, 'down')"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+      <a class="downvote" data-ng-class="(vm.get_user_vote_type(vm.post) == 'down') ? 'active' : ''" data-ng-click="vm.vote('down')"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
     </div>
     <div class="post">
       <div class="heading">
@@ -21,26 +21,14 @@
         </div>
         <div class="body">
           <span>{{post.desc_what}}</span>
-          <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
+          <a href="{{vm.post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
         </div>
       </div>
-
-      <p><em>{{vm.post.user}}</em></p>
-      <p><a href="{{ vm.post.link }}">View link at source</a></p>
-      <h2>Favorites</h2>
-      <div data-ng-repeat="favorite in vm.post.favorites">
-        {{favorite}}
-      </div>
-      <h2>Votes</h2>
-      <div data-ng-repeat="vote in vm.post.votes">
-        {{vote}}
-      </div>
+    </div>
   </div>
 </div>
 
 
-<button data-ng-click="vm.vote('up')">Upvote</button>
-<button data-ng-click="vm.vote('down')">Downvote</button>
 
 <div id="editPostModal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">

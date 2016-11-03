@@ -366,6 +366,13 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
     })
   }
 
+  // Check favorites method checks if currentUser has favorited a post
+  this.check_favorites = function(post) {
+    return post.favorites.some( fav => {
+      return this.currentUser ? fav.user_id == this.currentUser.id : false
+    })
+  }
+
   // Add Favorite method sends POST request to /api/posts/:id/favorite
   this.add_favorite = function() {
     FavoriteFactory.create({
