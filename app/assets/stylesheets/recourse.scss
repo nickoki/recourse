@@ -46,20 +46,20 @@ body {
 
 a {
   text-decoration: none !important;
-  color: $primary;
+  color: $primary-dark;
   cursor: pointer;
   transition: 0.2s;
 
   &:hover {
-    color: $primary-dark;
+    color: $primary-darker;
   }
 
   &:visited {
-    color: $primary-dark;
+    color: $primary;
   }
 
   &:visited:hover {
-    color: $primary-darker;
+    color: $primary-dark;
   }
 }
 
