@@ -11,7 +11,7 @@
         <span class="header-link">
           <a data-ng-if="!vm.check_favorites() && vm.currentUser" data-ng-click="vm.add_favorite()"><i class="fa fa-star-o" aria-hidden="true"></i></a>
           <a data-ng-if="vm.check_favorites() && vm.currentUser" data-ng-click="vm.remove_favorite()"><i class="fa fa-star" aria-hidden="true"></i></a>
-          <a data-ng-show="vm.currentUser" class="button" data-toggle="modal" data-target="#editPostModal">Edit Post</a>
+          <a data-ng-show="vm.currentUser.id == vm.post.user_id" class="button" data-toggle="modal" data-target="#editPostModal">Edit Post</a>
         </span>
       </div>
 
@@ -19,10 +19,10 @@
         <div class="stats">
           <span><em>submitted <time am-time-ago="vm.post.created_at" title="{{ vm.post.created_at | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time> by {{vm.post.user.email}}</em></span>
         </div>
-        <a href="{{vm.post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
+        <a href="{{vm.post.link}}" class="external-link"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
         <div class="body">
           <h2>What does this resource cover?</h2>
-          <p>{{vm.post.desc_what}}></p>
+          <p>{{vm.post.desc_what}}</p>
           <h2>What makes this a great resource?</h2>
           <p>{{vm.post.desc_why}}</p>
           <h2>Who is the ideal audience?</h2>
