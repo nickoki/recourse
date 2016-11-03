@@ -1,6 +1,6 @@
 # app/controllers/authentications_controller.rb
 
-require_relative '/lib/auth.rb'
+require_relative "#{Rails.root}/lib/auth.rb"
 
 class AuthenticationsController < ApplicationController
 
