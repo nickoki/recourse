@@ -14,13 +14,13 @@ class Api::PostsController < ApplicationController
   # GET /posts
   def index
     @posts = Post.all
-    render :json => @posts.to_json(:include => [:favorites, :votes])
+    render :json => @posts.to_json(:include => [:favorites, :votes, :user])
   end
 
   # GET /posts/1
   def show
     # @post defined in before_action
-    render :json => @post.to_json(:include => [:favorites, :votes])
+    render :json => @post.to_json(:include => [:favorites, :votes, :user])
   end
 
   # POST /posts

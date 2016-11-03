@@ -1,29 +1,43 @@
-<div class="col-md-9">
-  <div data-ng-repeat="post in vm.posts | myPosts:vm | myFavorites:vm | filter:vm.searchTerm | orderBy: 'created_at':true ">
+<div class="col-md-3 col-md-push-9">
+  <div class="well well-sm">
+    <form>
+      <h4>Search</h4>
+      <input id="search-box" type="text" data-ng-model="vm.searchTerm">
+      <h4>Filter</h4>
+      <label><input type="checkbox" data-ng-model="vm.filters.favorites"/>My Favorites</label>
+      <label><input type="checkbox" data-ng-model="vm.filters.myPosts"/>My Posts</label>
+    </form>
+  </div>
+</div>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><a data-ui-sref="postShow({id: post.id})">{{post.title}}</a></h3>
-        <a data-ng-if="favorited = (!vm.check_favorites(post) && vm.currentUser)" data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-        <a data-ng-if="favorited = (vm.check_favorites(post) && vm.currentUser)" data-ng-click="vm.remove_favorite(post)"><i class="fa fa-star" aria-hidden="true"></i></a>
+<div class="col-md-9 col-md-pull-3">
+  <h1>Resources<span class="header-link"><a class="button" data-toggle="modal" data-target="#newPostModal">New</a></span></h1>
+  <div class="post-table" data-ng-repeat="post in vm.posts | myPosts:vm | myFavorites:vm | filter:vm.searchTerm | orderBy: 'created_at':true">
+
+    <div class="post">
+      <div class="votes">
+        <a class="upvote" data-ng-class="(vm.get_user_vote_type(post) == 'up') ? 'active' : ''" data-ng-click="vm.vote(post, 'up')"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+        <span class="score">{{vm.count_votes(post)}}</span>
+        <a class="downvote" data-ng-class="(vm.get_user_vote_type(post) == 'down') ? 'active' : ''" data-ng-click="vm.vote(post, 'down')"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
       </div>
-      <div class="panel-body">
-        <span am-time-ago="post.created_at | amParse:'YYYY.MM.DD HH:mm:ss'"></span>
-        <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i> Go To Resource</a>
+      <div class="content">
+        <div class="heading">
+          <a class="title" data-ui-sref="postShow({id: post.id})">{{post.title}}</a>
+          <a data-ng-if="!vm.check_favorites(post) && vm.currentUser" data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+          <a data-ng-if="vm.check_favorites(post) && vm.currentUser" data-ng-click="vm.remove_favorite(post)"><i class="fa fa-star" aria-hidden="true"></i></a>
+        </div>
+        <div class="stats">
+          <span><em>submitted at {{post.created_at}} by {{post.user.email}}</em></span>
+        </div>
+        <div class="body">
+          <span>{{post.desc_what}}</span>
+          <span am-time-ago="post.created_at | amUtcParse:'YYYY.MM.DD HH:mm:ss'"></span>
+          <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
+        </div>
       </div>
     </div>
 
   </div>
-</div>
-<div class="col-md-3">
-  <div class="well well-sm">
-    <h4>Search</h4>
-    <input id="search-box"type="text" data-ng-model="vm.searchTerm">
-    <h4>Filter</h4>
-    <label><input type="checkbox" data-ng-model="vm.filters.favorites"/>My Favorites</label>
-    <label><input type="checkbox" data-ng-model="vm.filters.myPosts"/>My Posts</label>
-  </div>
-  <button type="button" class="btn btn-default" id="signUpModalButton" data-toggle="modal" data-target="#newPostModal">New Post</button>
 </div>
 
 

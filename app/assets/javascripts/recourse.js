@@ -308,7 +308,29 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
   }
 }
 
+  // Count votes
+  this.count_votes = function(post) {
+    let upvotes = 0
+    let downvotes = 0
 
+    for (let i = 0; i < post.votes.length; i++) {
+      if (post.votes[i].vote_type == "up") {
+        upvotes++
+      } else if (post.votes[i].vote_type == "down") {
+        downvotes++
+      }
+    }
+    return (upvotes - downvotes)
+  }
+
+  this.get_user_vote_type = function(post) {
+    for (i = 0; i <post.votes.length; i++) {
+      if (post.votes[i].user_id == this.currentUser.id) {
+        return post.votes[i].vote_type
+      }
+    }
+  }
+}
 
 // Show Post Controller
 function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $stateParams, $state) {
