@@ -36,6 +36,6 @@
   <label for="edit-level">Difficulty Level</label>
   <input type="text" id="edit-level" data-ng-model="vm.post.level">
   <br>
-  <button>Save</button>
-  <button type="button" data-ng-click="vm.delete()">DELETE!</button>
+  <button data-ng-show="vm.currentUser.id == vm.post.user_id">Save</button>
+  <button data-ng-show="vm.currentUser.id == vm.post.user_id" type="button" data-ng-click="vm.delete()">DELETE!</button>
 </form>
