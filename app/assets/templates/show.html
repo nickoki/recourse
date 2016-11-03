@@ -1,41 +1,87 @@
-<h1>{{ vm.post.title }}</h1>
-<p><em>{{vm.post.user}}</em></p>
-<p><a href="{{ vm.post.link }}">View link at source</a></p>
-<h2>Favorites</h2>
-<div data-ng-repeat="favorite in vm.post.favorites">
-  {{favorite}}
+<div class="col-md-12">
+  <div class="post-show">
+    <div class="post">
+      <div class="heading">
+        <div class="votes">
+          <a class="upvote" data-ng-class="(vm.get_user_vote_type(post) == 'up') ? 'active' : ''" data-ng-click="vm.vote(post, 'up')"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+          <span class="score">{{vm.count_votes(post)}}</span>
+          <a class="downvote" data-ng-class="(vm.get_user_vote_type(post) == 'down') ? 'active' : ''" data-ng-click="vm.vote(post, 'down')"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+        </div>
+        <h1>{{vm.post.title}}
+          <span class="header-link">
+            <a data-ng-if="!vm.check_favorites(post) && vm.currentUser" data-ng-click="vm.add_favorite(post)"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+            <a data-ng-if="vm.check_favorites(post) && vm.currentUser" data-ng-click="vm.remove_favorite(post)"><i class="fa fa-star" aria-hidden="true"></i></a>
+            <a data-ng-show="vm.currentUser" class="button" data-toggle="modal" data-target="#editPostModal">Edit Post</a>
+          </span>
+        </h1>
+      </div>
+        <a class="title" data-ui-sref="postShow({id: post.id})">{{post.title}}</a>
+
+      <div class="content">
+        <div class="stats">
+          <span><em>submitted <time am-time-ago="post.created_at" title="{{ post.created_at | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time> by {{post.user.email}}</em></span>
+        </div>
+        <div class="body">
+          <span>{{post.desc_what}}</span>
+          <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
+        </div>
+      </div>
+
+      <p><em>{{vm.post.user}}</em></p>
+      <p><a href="{{ vm.post.link }}">View link at source</a></p>
+      <h2>Favorites</h2>
+      <div data-ng-repeat="favorite in vm.post.favorites">
+        {{favorite}}
+      </div>
+      <h2>Votes</h2>
+      <div data-ng-repeat="vote in vm.post.votes">
+        {{vote}}
+      </div>
+  </div>
 </div>
-<h2>Votes</h2>
-<div data-ng-repeat="vote in vm.post.votes">
-  {{vote}}
-</div>
+
 
 <button data-ng-click="vm.vote('up')">Upvote</button>
 <button data-ng-click="vm.vote('down')">Downvote</button>
 
-<h2>Edit</h2>
-<form data-ng-submit="vm.update()">
-  <label>Title</label>
-  <input type="text" id="edit-title" data-ng-model="vm.post.title">
-  <br>
-  <label for="edit-link">Link</label>
-  <input type="text" id="edit-link" data-ng-model="vm.post.link">
-  <br>
-  <label for="edit-desc-what">What does this resource cover?</label>
-  <input type="text" id="edit-desc-what" data-ng-model="vm.post.desc_what">
-  <br>
-  <label for="edit-desc-why">What makes this a great resource?</label>
-  <input type="text" id="edit-desc-why" data-ng-model="vm.post.desc_why">
-  <br>
-  <label for="edit-desc-who">Who is the ideal audience for this resource?</label>
-  <input type="text" id="edit-desc-who" data-ng-model="vm.post.desc_who">
-  <br>
-  <label for="edit-pub-date">Original Publication Date</label>
-  <input type="date" id="edit-pub-date" data-ng-model="vm.post.pub_date">
-  <br>
-  <label for="edit-level">Difficulty Level</label>
-  <input type="text" id="edit-level" data-ng-model="vm.post.level">
-  <br>
-  <button data-ng-show="vm.currentUser.id == vm.post.user_id">Save</button>
-  <button data-ng-show="vm.currentUser.id == vm.post.user_id" type="button" data-ng-click="vm.delete()">DELETE!</button>
-</form>
+<div id="editPostModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Post</h4>
+      </div>
+      <div class="modal-body">
+        <form data-ng-submit="vm.update()">
+          <label>Title</label>
+          <input type="text" id="edit-title" data-ng-model="vm.post.title">
+          <br>
+          <label for="edit-link">Link</label>
+          <input type="text" id="edit-link" data-ng-model="vm.post.link">
+          <br>
+          <label for="edit-desc-what">What does this resource cover?</label>
+          <input type="text" id="edit-desc-what" data-ng-model="vm.post.desc_what">
+          <br>
+          <label for="edit-desc-why">What makes this a great resource?</label>
+          <input type="text" id="edit-desc-why" data-ng-model="vm.post.desc_why">
+          <br>
+          <label for="edit-desc-who">Who is the ideal audience for this resource?</label>
+          <input type="text" id="edit-desc-who" data-ng-model="vm.post.desc_who">
+          <br>
+          <label for="edit-pub-date">Original Publication Date</label>
+          <input type="date" id="edit-pub-date" data-ng-model="vm.post.pub_date">
+          <br>
+          <label for="edit-level">Difficulty Level</label>
+          <input type="text" id="edit-level" data-ng-model="vm.post.level">
+          <br>
+          <button data-ng-show="vm.currentUser.id == vm.post.user_id">Save</button>
+          <button data-ng-show="vm.currentUser.id == vm.post.user_id" type="button" data-ng-click="vm.delete()">DELETE!</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="vm.create(post)">Submit</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

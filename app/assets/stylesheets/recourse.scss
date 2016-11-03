@@ -109,17 +109,22 @@ a.button {
 
 
 // ====================
-// POSTS
+// POSTS INDEX
 // ====================
 
 h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 
   .header-link {
     margin-left: 1em;
     font-size: 14pt;
+
+    .button {
+      margin-left: 1em;
+    }
   }
 }
 
@@ -181,6 +186,48 @@ h1 {
 
         i {
           margin-right: 0.2em;
+        }
+      }
+    }
+  }
+}
+
+
+
+// ====================
+// POST SHOW
+// ====================
+
+.post-show {
+  display: flex;
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .heading {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+
+      .votes {
+        display: flex;
+        flex-direction: column;
+        // justify-content: flex-end;
+        align-items: baseline;
+        padding: 0 0.8em;
+        height: 100%;
+
+        .score {
+          margin: 0.2em 0;
+          font-size: 0.9em;
+          color: $base-lighter;
+        }
+
+        i {
+          font-size: 1.4em;
         }
       }
     }
