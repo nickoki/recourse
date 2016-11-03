@@ -227,7 +227,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
       localStorage.setItem('recourseUser', JSON.stringify(recourseUser))
       this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user
       // $state.go("postIndex", {}, { reload: true })
-      location.reload() // jank af
+      // location.reload() // jank af
     })
   }
 

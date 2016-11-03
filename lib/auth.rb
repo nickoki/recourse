@@ -4,7 +4,7 @@
 require 'jwt'
 
 # Custom Authorization class
-class Auth
+module Auth
 
   # Use HS256 as hashing alg, set as class constant to use in .issue and .decode
   ALGORITHM = 'HS256'
