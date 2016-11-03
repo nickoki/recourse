@@ -1,5 +1,7 @@
 # app/controllers/authentications_controller.rb
 
+require_relative '../lib/auth.rb'
+
 class AuthenticationsController < ApplicationController
 
   # Method to authenticate user
