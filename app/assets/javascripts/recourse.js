@@ -257,7 +257,6 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory, 
 
   // Search query params
   this.searchTerm = $location.search().s
-  console.log(this.searchTerm)
 
   // Set front-end currentUser
   if (localStorage.getItem('recourseUser')) {
