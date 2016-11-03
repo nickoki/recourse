@@ -34,7 +34,7 @@
             <li><a href="/#/">Home</a></li>
             <li data-ng-if="!vm.currentUser"><a id="signInModalButton" href="/#/" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
             <li data-ng-if="!vm.currentUser"><a id="signUpModalButton" href="/#/" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
-            <li data-ng-if="vm.currentUser"><a href="/#/" data-ng-click="vm.signOut()" >Sign Out {{vm.currentUser.email}}</a></li>
+            <li data-ng-if="vm.currentUser"><a href="/#/" data-ng-click="vm.signOut()" >Sign Out ({{vm.currentUser.email}})</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

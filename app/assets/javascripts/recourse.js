@@ -340,6 +340,11 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
   // Update post object against API
   this.post = PostFactory.get({ id: $stateParams.id })
 
+  // Set front-end currentUser
+  if (localStorage.getItem('recourseUser')) {
+    this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user
+  }
+
   // Update method sends PUT request to /api/posts/:id
   this.update = function() {
     PostFactory.update({
