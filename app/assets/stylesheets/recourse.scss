@@ -292,7 +292,7 @@ form {
     flex-direction: column;
   }
 
-  input,
+  input[type="text"],
   textarea {
     margin-bottom: 1em;
     border: 1px solid $base-light;
@@ -307,8 +307,7 @@ form {
 
   input[type="checkbox"] {
     position: relative !important;
-    margin: 0 !important;
-    margin-right: 0.4em;
+    margin: 0 0.6em 0 0 !important;
   }
 
   button {
