@@ -1,5 +1,9 @@
 # Recourse
 
+Deployment Reminder:
+ - Precompile with `rails assets:precompile`
+ - `git push heroku master`
+
 ---
 
 ## Milestones
