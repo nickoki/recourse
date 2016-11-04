@@ -23,7 +23,8 @@
     <span class="header-link"><a data-ng-show="vm.currentUser" class="button" data-toggle="modal" data-target="#newPostModal">New</a></span>
   </div>
   <!-- BEGIN NG-REPEAT -->
-  <div class="post-table" data-ng-repeat="post in vm.posts | myPosts:vm | myFavorites:vm | filter:vm.searchTerm | orderBy:[vm.count_votes,'created_at']:true">
+  <h1>Resources<span class="header-link"><a data-ng-show="vm.currentUser" class="button" data-toggle="modal" data-target="#newPostModal">New</a></span></h1>
+  <div class="post-table" data-ng-repeat="post in vm.posts | myPosts:vm | myFavorites:vm | filter:vm.searchTerm | orderBy:['created_at', vm.count_votes]:true">
     <div class="post">
       <div class="votes">
         <a class="upvote" data-ng-class="(vm.get_user_vote_type(post) == 'up') ? 'active' : ''" data-ng-click="vm.vote(post, 'up')"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
