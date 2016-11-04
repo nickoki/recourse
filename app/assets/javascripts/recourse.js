@@ -58,6 +58,7 @@ angular
     "PostFactory",
     "FavoriteFactory",
     "VoteFactory",
+    "$location",
     PostIndexControllerFunction
   ])
 
@@ -232,7 +233,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
     })
   }
 
-  // Sign Up method removes JWT from localStorage
+  // Sign Out method removes JWT from localStorage
   this.signOut = function() {
     localStorage.removeItem('recourseUser')
     this.currentUser = ""
@@ -243,7 +244,7 @@ function RecourseControllerFunction(TokenFactory, DeviseFactory, $state) {
 
 
 // Index Post Controller Function
-function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) {
+function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $location) {
 
   // Update posts object against API
   this.posts = PostFactory.query()
@@ -254,6 +255,9 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
     myPosts: false
   }
 
+  // Search query params
+  this.searchTerm = $location.search().s
+
   // Set front-end currentUser
   if (localStorage.getItem('recourseUser')) {
     this.currentUser = JSON.parse(localStorage.getItem('recourseUser')).user
@@ -263,7 +267,10 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
   this.create = function(post) {
     PostFactory.create({
       title: post.title,
-      link: post.link
+      link: post.link,
+      desc_what: post.desc_what,
+      desc_why: post.desc_why,
+      desc_who: post.desc_who
     }).$promise.then( () => {
       // After save, re-query the API (avoids page refresh)
       this.posts = PostFactory.query()
@@ -326,7 +333,7 @@ function PostIndexControllerFunction(PostFactory, FavoriteFactory, VoteFactory) 
     if (!this.currentUser) {
       return
     } else {
-      for (i = 0; i < post.votes.length; i++) {
+      for (let i = 0; i < post.votes.length; i++) {
         if (post.votes[i].user_id == this.currentUser.id) {
           return post.votes[i].vote_type
         }
@@ -366,6 +373,13 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
     })
   }
 
+  // Check favorites method checks if currentUser has favorited a post
+  this.check_favorites = function() {
+    return this.post.favorites.some( fav => {
+      return this.currentUser ? fav.user_id == this.currentUser.id : false
+    })
+  }
+
   // Add Favorite method sends POST request to /api/posts/:id/favorite
   this.add_favorite = function() {
     FavoriteFactory.create({
@@ -394,6 +408,33 @@ function PostShowControllerFunction(PostFactory, FavoriteFactory, VoteFactory, $
     }).$promise.then( () => {
       this.post = PostFactory.get({ id: $stateParams.id })
     })
+  }
+
+  // Count votes
+  this.count_votes = function() {
+    let upvotes = 0
+    let downvotes = 0
+
+    for (let i = 0; i < this.post.votes.length; i++) {
+      if (this.post.votes[i].vote_type == "up") {
+        upvotes++
+      } else if (this.post.votes[i].vote_type == "down") {
+        downvotes++
+      }
+    }
+    return (upvotes - downvotes)
+  }
+
+  this.get_user_vote_type = function() {
+    if (!this.currentUser) {
+      return
+    } else {
+      for (let i = 0; i < this.post.votes.length; i++) {
+        if (this.post.votes[i].user_id == this.currentUser.id) {
+          return this.post.votes[i].vote_type
+        }
+      }
+    }
   }
 }
 

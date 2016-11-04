@@ -1,16 +1,27 @@
-<div class="col-md-3 col-md-push-9">
+<div class="col-md-3 col-md-push-9 aside">
   <div class="well well-sm">
     <form>
       <h4>Search</h4>
       <input id="search-box" type="text" data-ng-model="vm.searchTerm">
       <h4 data-ng-show="vm.currentUser">Filter</h4>
-      <label data-ng-show="vm.currentUser"><input type="checkbox" data-ng-model="vm.filters.favorites"/>My Favorites</label>
-      <label data-ng-show="vm.currentUser"><input type="checkbox" data-ng-model="vm.filters.myPosts"/>My Posts</label>
+      <div class="field">
+        <label class="checkbox" data-ng-show="vm.currentUser"><input type="checkbox" data-ng-model="vm.filters.favorites"/>My Favorites</label>
+        <label class="checkbox" data-ng-show="vm.currentUser"><input type="checkbox" data-ng-model="vm.filters.myPosts"/>My Posts</label>
+      </div>
     </form>
+  </div>
+  <hr />
+  <div class="links">
+    <li><a href="/api/posts">API</a></li>
+    <li><a href="https://github.com/nickoki/recourse">Source Code</a></li>
   </div>
 </div>
 
 <div class="col-md-9 col-md-pull-3">
+  <div class="index-heading">
+    <h1>Resources</h1>
+    <span class="header-link"><a data-ng-show="vm.currentUser" class="button" data-toggle="modal" data-target="#newPostModal">New</a></span>
+  </div>
   <!-- BEGIN NG-REPEAT -->
   <h1>Resources<span class="header-link"><a data-ng-show="vm.currentUser" class="button" data-toggle="modal" data-target="#newPostModal">New</a></span></h1>
   <div class="post-table" data-ng-repeat="post in vm.posts | myPosts:vm | myFavorites:vm | filter:vm.searchTerm | orderBy:['created_at', vm.count_votes]:true">
@@ -31,8 +42,7 @@
         </div>
         <div class="body">
           <span>{{post.desc_what}}</span>
-          <span am-time-ago="post.created_at | amUtcParse:'YYYY.MM.DD HH:mm:ss'"></span>
-          <a href="{{post.link}}"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
+          <a href="{{post.link}}" class="external-link"><i class="fa fa-external-link-square" aria-hidden="true"></i><em>Go To Resource</em></a>
         </div>
       </div>
     </div>
@@ -50,14 +60,34 @@
         <h4 class="modal-title">New Post</h4>
       </div>
       <div class="modal-body">
-        <form method="POST">
-          <input placeholder="Title" type="text" data-ng-model="post.title" />
-          <input placeholder="Link" type="text" data-ng-model="post.link" />
-        </form>
+        <div class="form">
+          <form>
+            <div class="field">
+              <label>Title</label>
+              <input placeholder="Placeholder text for dummies" type="text" data-ng-model="post.title" />
+            </div>
+            <div class="field">
+              <label>Link</label>
+              <input placeholder="http://www.dumdum.com/placeholders" type="text" data-ng-model="post.link" />
+            </div>
+            <div class="field">
+              <label>What does this resource cover?</label>
+              <textarea placeholder="This article is an expansive guide to placeholder best practices and jokes." type="text" data-ng-model="post.desc_what"></textarea>
+            </div>
+            <div class="field">
+              <label>What makes this a great resource?</label>
+              <textarea placeholder="It's well organized and concise!" type="text" data-ng-model="post.desc_why"></textarea>
+            </div>
+            <div class="field">
+              <label>Who is the ideal audience for this resource?</label>
+              <textarea placeholder="Anyone that needs a confidence boost about the jokes they include in their examples." type="text" data-ng-model="post.desc_who"></textarea>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="vm.create(post)">Submit</button>
+      <div class="modal-footer actions">
+        <a class="button cancel" data-dismiss="modal">Cancel</a>
+        <a class="button" data-dismiss="modal" data-ng-click="vm.create(post)">Submit</a>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

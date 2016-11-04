@@ -46,32 +46,59 @@ body {
 
 a {
   text-decoration: none !important;
-  color: $primary;
+  color: $primary-dark;
   cursor: pointer;
   transition: 0.2s;
 
   &:hover {
-    color: $primary-dark;
+    color: $primary-darker;
   }
 
   &:visited {
-    color: $primary-dark;
+    color: $primary;
   }
 
   &:visited:hover {
-    color: $primary-darker;
+    color: $primary-dark;
   }
 }
 
 a.button {
   border: 1px solid $primary;
   border-radius: 4px;
+  margin: 0 0.4em;
   padding: 0.4em 0.6em;
 
   &:hover {
     border-color: $primary-dark;
     background: $primary-lighter;
   }
+}
+
+a.button.cancel {
+  border: 1px solid $base-light;
+  color: $base-light;
+
+  &:hover {
+    border-color: $base;
+    background: #fafafa;
+    color: $base;
+  }
+}
+
+a.button.delete {
+  border: 1px solid lighten(#DA4453, 10%);
+  color: lighten(#DA4453, 10%);
+
+  &:hover {
+    border-color: #DA4453;
+    background: lighten(#DA4453, 40%);
+    color: #DA4453;
+  }
+}
+
+.external-link {
+  display: inline-block;
 }
 
 .upvote {
@@ -109,17 +136,34 @@ a.button {
 
 
 // ====================
-// POSTS
+// POSTS INDEX
 // ====================
+
+.index-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6em;
+  width: 100%;
+}
 
 h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 !important;
+  width: 100%;
+}
 
-  .header-link {
+.header-link {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: 1em;
+  min-width: 180px;
+  font-size: 14pt;
+
+  .button {
     margin-left: 1em;
-    font-size: 14pt;
   }
 }
 
@@ -190,20 +234,70 @@ h1 {
 
 
 // ====================
-// FORMS
+// POST SHOW
 // ====================
 
+.post-show {
+  display: flex;
+
+  .votes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.6em;
+    padding: 0 0.8em;
+    height: 100%;
+
+    .score {
+      margin: 0.1em 0;
+      font-size: 1em;
+      color: $base-lighter;
+    }
+
+    i {
+      font-size: 1.4em;
+    }
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .heading {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-bottom: 0.6em;
+      width: 100%;
+    }
+  }
+}
+
+
+
+// ====================
+// FORMS
+// ====================
 
 form {
   display: flex;
   flex-direction: column;
+  width: 100%;
+
+  .field {
+    display: flex;
+    flex-direction: column;
+  }
 
   input,
   textarea {
-    margin: 1em 0;
+    margin-bottom: 1em;
     border: 1px solid $base-light;
     border-radius: 3px;
-    padding: 1em;
+    padding: 0.4em 0.6em;
+    width: 100%;
   }
 
   textarea {
@@ -211,6 +305,8 @@ form {
   }
 
   input[type="checkbox"] {
+    position: relative !important;
+    margin: 0 !important;
     margin-right: 0.4em;
   }
 
@@ -228,6 +324,28 @@ form {
     &:hover {
       background: #fafafa;
       transition: 0.6s;
+    }
+  }
+}
+
+
+
+// ====================
+// ASIDE
+// ====================
+
+.aside {
+  .links {
+    li {
+      list-style: none;
+
+      a {
+        color: $base-lighter;
+
+        &:hover {
+          color: $base-light;
+        }
+      }
     }
   }
 }
